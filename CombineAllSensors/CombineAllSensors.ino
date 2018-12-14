@@ -18,7 +18,7 @@ rgbColor colors;
 SparkFun_APDS9960 apds = SparkFun_APDS9960();
 HDC1080JS tempSensor;
 Ultrasonic ultrasonic(9, 10);
-SoftwareSerial mySerial(rx, tx);
+SoftwareSerial mySerial(6, 7);
 requestOptions request;
 int data;
 float tempdata;

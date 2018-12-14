@@ -1,8 +1,7 @@
-#ifndef Send_To_Screen_H
-#define Send_To_Screen_H
+#ifndef Comms_H
+#define Comms_H
+
 #include <Arduino.h>
-#include <SparkFun_APDS9960.h>
-#include <HDC1080JS.h>
 #include <SoftwareSerial.h>
 
 typedef struct{
@@ -17,36 +16,8 @@ class Comms
     protected:
         void SendMessage(MessageHeader* message);
         bool ReceiveMessage(MessageHeader* message);
-
     public:
         Comms(uint8_t rx,uint8_t tx);
-};
-class Controller:Comms
-{
-    public:
-        Controller(uint8_t rx,uint8_t tx);
-        void RequestForTemperature();
-        void RequestForColor();
-        void RequestForHeight();
-};
-class Drone:Comms
-{   private:
-        HDC1080JS _TempSensor;
-        //HeightSensor;
-        SparkFun_APDS9960 _LightSensor;
-        const float transmitionRate = 65536.0 / 37889.0;        
-        uint16_t ambient_light = 0;
-        uint16_t red_light = 0;
-        uint16_t green_light = 0;
-        uint16_t blue_light = 0;
-    public:
-        Drone(uint8_t rx,uint8_t tx);
-        Drone SetUpTempSensor();
-        void SendTemperature();
-        Drone SetUpColorSensor();
-        void SendColor();
-        Drone SetUpHeightSensor();
-        void SendHeight();
 };
 
 enum MessageTypes

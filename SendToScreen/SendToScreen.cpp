@@ -1,17 +1,16 @@
 #include <SendToScreen.h>
 
-Comms::Comms(SoftwareSerial* serial)
-{
-    _serial=serial;
-    _serial->begin(9600);
+Comms::Comms(uint8_t rx,uint8_t tx):_serial(rx,tx)
+{    
+    _serial.begin(9600);
 }
 
-Controller::Controller(SoftwareSerial* serial):Comms(serial)
+Controller::Controller(uint8_t rx,uint8_t tx):Comms(rx,tx)
 {
 
 }
 
-Drone::Drone(SoftwareSerial* serial):Comms(serial)
+Drone::Drone(uint8_t rx,uint8_t tx):Comms(rx,tx)
 {
 
 }
@@ -22,21 +21,21 @@ void Comms::SendMessage(MessageHeader* message)
     byte* end=p+message->length;
     while(p<end)
     {
-        _serial->write(*p);
+        _serial.write(*p);
         p++;
     }
 }
 
 bool Comms::ReceiveMessage(MessageHeader* message)
 {
-    byte size=_serial->read();
+    byte size=_serial.read();
     byte* p=(byte*)message;
     message->length=size;
     byte* end=p+size;
     p++;
     while(p<end)
     {
-        *p=_serial->read();
+        *p=_serial.read();
         p++;
     }
 }
@@ -51,9 +50,10 @@ void Controller::RequestForTemperature()
     SendMessage(&request.header);
 }
 
-void Drone::SetUpTempSensor()
+Drone Drone::SetUpTempSensor()
 {
     _TempSensor.config();
+    return *this;
 }
 
 void Drone::SendTemperature()
@@ -79,11 +79,12 @@ void Controller::RequestForColor()
     SendMessage(&request.header);
 }
 
-void Drone::SetUpColorSensor()
+Drone Drone::SetUpColorSensor()
 {
     _LightSensor=SparkFun_APDS9960();
     _LightSensor.init();
-    _LightSensor.enableLightSensor(false) ;
+    _LightSensor.enableLightSensor(false);
+    return *this;
 }
 
 void Drone::SendColor()
@@ -116,9 +117,9 @@ void Controller::RequestForHeight()
     SendMessage(&request.header);
 }
 
-void Drone::SetUpHeightSensor()
+Drone Drone::SetUpHeightSensor()
 {
-
+    return *this;
 }
 
 void Drone::SendHeight()

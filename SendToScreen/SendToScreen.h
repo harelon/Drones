@@ -13,18 +13,18 @@ typedef struct{
 class Comms
 {
     private:
-        SoftwareSerial* _serial;
+        SoftwareSerial _serial;
     protected:
         void SendMessage(MessageHeader* message);
         bool ReceiveMessage(MessageHeader* message);
 
     public:
-        Comms(SoftwareSerial* serial);
+        Comms(uint8_t rx,uint8_t tx);
 };
 class Controller:Comms
 {
     public:
-        Controller(SoftwareSerial* serial);
+        Controller(uint8_t rx,uint8_t tx);
         void RequestForTemperature();
         void RequestForColor();
         void RequestForHeight();
@@ -40,12 +40,12 @@ class Drone:Comms
         uint16_t green_light = 0;
         uint16_t blue_light = 0;
     public:
-        Drone(SoftwareSerial* serial);
-        void SetUpTempSensor();
+        Drone(uint8_t rx,uint8_t tx);
+        Drone SetUpTempSensor();
         void SendTemperature();
-        void SetUpColorSensor();
+        Drone SetUpColorSensor();
         void SendColor();
-        void SetUpHeightSensor();
+        Drone SetUpHeightSensor();
         void SendHeight();
 };
 

@@ -1,8 +1,9 @@
 #include <Drone.h>
 Drone drone(6,7);
+Drone* droneRef=&drone;
 void setup() {
   // put your setup code here, to run once:
-drone.SetUpColorSensor().SetUpHeightSensor().SetUpTempSensor();
+droneRef->SetUpColorSensor()->SetUpHeightSensor()->SetUpTempSensor();
 }
 
 void loop() {

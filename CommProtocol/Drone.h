@@ -18,11 +18,11 @@ class Drone:Comms
         uint16_t blue_light = 0;
     public:
         Drone(uint8_t rx,uint8_t tx);
-        Drone SetUpTempSensor();
+        Drone* SetUpTempSensor();
         void SendTemperature();
-        Drone SetUpColorSensor();
+        Drone* SetUpColorSensor();
         void SendColor();
-        Drone SetUpHeightSensor();
+        Drone* SetUpHeightSensor();
         void SendHeight();
 };
 #endif

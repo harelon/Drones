@@ -5,10 +5,10 @@ Drone::Drone(uint8_t rx,uint8_t tx):Comms(rx,tx)
 
 }
 
-Drone Drone::SetUpTempSensor()
+Drone* Drone::SetUpTempSensor()
 {
     _TempSensor.config();
-    return *this;
+    return this;
 }
 
 void Drone::SendTemperature()
@@ -24,12 +24,12 @@ void Drone::SendTemperature()
     SendMessage(&response.header);
 }
 
-Drone Drone::SetUpColorSensor()
+Drone* Drone::SetUpColorSensor()
 {
     _LightSensor=SparkFun_APDS9960();
     _LightSensor.init();
     _LightSensor.enableLightSensor(false);
-    return *this;
+    return this;
 }
 
 void Drone::SendColor()
@@ -52,9 +52,9 @@ void Drone::SendColor()
     SendMessage(&response.header);
 }
 
-Drone Drone::SetUpHeightSensor()
+Drone* Drone::SetUpHeightSensor()
 {
-    return *this;
+    return this;
 }
 
 void Drone::SendHeight()

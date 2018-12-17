@@ -1,0 +1,8 @@
+Drone	KEYWORD1
+SetUpTempSensor	KEYWORD2
+SendTemperature	KEYWORD2
+SetUpColorSensor	KEYWORD2
+SendColor	KEYWORD2
+SetUpHeightSensor 	KEYWORD2
+SendHeight	KEYWORD2
+RecieveMessage	KEYWORD2

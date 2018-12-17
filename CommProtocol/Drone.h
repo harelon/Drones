@@ -1,10 +1,12 @@
+#ifdef UseDrone
+
 #ifndef Drone_H
 #define Drone_H
 
-#include <Comms.h>
 #include <SparkFun_APDS9960.h>
 #include <HDC1080JS.h>
 
+#include <Comms.h>
 
 class Drone:Comms
 {   private:
@@ -25,4 +27,6 @@ class Drone:Comms
         Drone* SetUpHeightSensor();
         void SendHeight();
 };
+#endif
+
 #endif

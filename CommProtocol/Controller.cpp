@@ -1,5 +1,5 @@
+#define UseController
 #include <Controller.h>
-
 Controller::Controller(uint8_t rx,uint8_t tx):Comms(rx,tx)
 {
 

@@ -15,6 +15,7 @@ class Controller:Comms
         void RequestForTemperature();
         void RequestForColor();
         void RequestForHeight();
+        bool RecieveMessage(MessageHeader* message);
 };
 
 #endif

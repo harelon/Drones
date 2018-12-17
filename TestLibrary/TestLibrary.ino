@@ -1,12 +1,12 @@
-#include "Drone.h"
-Drone drone(6,7);
-Drone* droneRef=&drone;
+#include "Controller.h"
+Controller Controller(6,7);
+//Controller* ControllerRef=&Controller;
 MessageHeader* message;
 void setup() {
-  droneRef->SetUpTempSensor()->SetUpColorSensor();
+  //ControllerRef->SetUpTempSensor()->SetUpColorSensor();
 }
 
 void loop() {
-  droneRef->SendTemperature();
+  Controller.RecieveMessage(message);
 
 }

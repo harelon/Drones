@@ -1,7 +1,12 @@
 #ifndef Controller_H
 #define Controller_H
 
-#include <Comms.h>
+#include "spiUnit.h"
+#include "TFT9341.h"
+#include "touch.h"
+#include <SPI.h>
+
+#include "Comms.h"
 
 class Controller:Comms
 {

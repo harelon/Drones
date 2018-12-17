@@ -1,10 +1,12 @@
-#include "Controller.h"
-Controller controller(8,9);
-
+#include "Drone.h"
+Drone drone(6,7);
+Drone* droneRef=&drone;
+MessageHeader* message;
 void setup() {
+  droneRef->SetUpTempSensor()->SetUpColorSensor();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  droneRef->SendTemperature();
 
 }

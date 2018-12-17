@@ -19,6 +19,10 @@ void Comms::SendMessage(MessageHeader* message)
 
 bool Comms::ReceiveMessage(MessageHeader* message)
 {
+    if(!(_serial.available()>0))
+    {
+        return false;
+    }
     byte size=_serial.read();
     byte* p=(byte*)message;
     message->length=size;
@@ -29,4 +33,5 @@ bool Comms::ReceiveMessage(MessageHeader* message)
         *p=_serial.read();
         p++;
     }
+    return true;
 }

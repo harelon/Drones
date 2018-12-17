@@ -24,5 +24,6 @@ class Drone:Comms
         void SendColor();
         Drone* SetUpHeightSensor();
         void SendHeight();
+        bool RecieveMessage(MessageHeader* message);
 };
 #endif

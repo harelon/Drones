@@ -1,5 +1,3 @@
-#ifdef UseDrone
-
 #ifndef Drone_H
 #define Drone_H
 
@@ -27,6 +25,4 @@ class Drone:Comms
         Drone* SetUpHeightSensor();
         void SendHeight();
 };
-#endif
-
 #endif

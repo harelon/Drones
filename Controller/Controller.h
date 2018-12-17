@@ -1,5 +1,3 @@
-#ifdef UseController
-
 #ifndef Controller_H
 #define Controller_H
 
@@ -13,7 +11,5 @@ class Controller:Comms
         void RequestForColor();
         void RequestForHeight();
 };
-
-#endif
 
 #endif

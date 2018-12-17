@@ -1,4 +1,3 @@
-#define UseDrone
 #include <Drone.h>
 Drone::Drone(uint8_t rx,uint8_t tx):Comms(rx,tx)
 {

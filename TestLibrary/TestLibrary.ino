@@ -1,9 +1,8 @@
 #define UseDrone
-#include <Drone.h>
-Drone drone(6, 7);
-Drone* droneRef = &drone;
+#include "Drone.h"
+Drone controller(8,9);
+
 void setup() {
-  droneRef->SetUpColorSensor()->SetUpHeightSensor()->SetUpTempSensor();
 }
 
 void loop() {

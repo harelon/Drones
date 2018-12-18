@@ -70,5 +70,5 @@ void Drone::SendHeight()
 
 bool Drone::RecieveMessage(MessageHeader* message)
 {    
-    return RecieveMessage(message);
+    return Comms::ReceiveMessage(message);
 }

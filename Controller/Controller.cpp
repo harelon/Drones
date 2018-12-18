@@ -36,5 +36,5 @@ void Controller::RequestForHeight()
 
 bool Controller::RecieveMessage(MessageHeader* message)
 {    
-    return RecieveMessage(message);
+    return Comms::RecieveMessage(message);
 }

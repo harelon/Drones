@@ -1,11 +1,11 @@
 #include "Controller.h"
-Controller Controller(6,7);
+Controller controller(6,7);
 MessageHeader* message;
 void setup() {
 }
 
 void loop() {
-  if(Controller.RecieveMessage(message))
+  if(controller.RecieveMessage(message))
   {
     if(message->type==RESPONSE_FOR_TEMPERATURE)
     {

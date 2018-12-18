@@ -13,11 +13,16 @@ class Comms
 {
     private:
         SoftwareSerial _serial;
+
     protected:
         void SendMessage(MessageHeader* message);
-        bool ReceiveMessage(MessageHeader* message);
+        bool ReceiveMessage(MessageHeader* message);        
+        void virtual DispatchMessage(MessageHeader* message) = 0;
+        
     public:
         Comms(uint8_t rx,uint8_t tx);
+        void PollMessage();
+
 };
 
 enum MessageTypes

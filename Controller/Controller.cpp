@@ -34,7 +34,40 @@ void Controller::RequestForHeight()
     SendMessage(&request.header);
 }
 
-bool Controller::RecieveMessage(MessageHeader* message)
+bool Controller::ReceiveMessage(MessageHeader* message)
 {    
-    return Comms::RecieveMessage(message);
+    return Comms::ReceiveMessage(message);
+}
+
+void Controller::DispatchMessage(MessageHeader* message)
+{
+    switch (message->type)
+    {
+        case RESPONSE_FOR_TEMPERATURE:
+            OnTemperatureResponse((TemperatureResponse*)message);
+            break;
+        case RESPONSE_FOR_COLOR:
+            OnColorResponse((ColorResponse*)message);
+            break;
+        case RESPONSE_FOR_HEIGHT:
+            OnHeightResponse((HeightResponse*)message);
+            break;
+    }
+}
+
+//to be defined by boltan
+
+void OnTemperatureResponse(TemperatureResponse* message)
+{
+
+}
+
+void OnColorResponse(ColorResponse* message)
+{
+
+}
+
+void OnHeightResponse(HeightResponse* message)
+{
+
 }

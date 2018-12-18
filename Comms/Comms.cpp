@@ -1,6 +1,6 @@
 #include <Comms.h>
 
-Comms::Comms(uint8_t rx,uint8_t tx):_serial(rx,tx)
+Comms::Comms(uint8_t rx, uint8_t tx) : _serial(rx, tx)
 {    
     _serial.begin(9600);
 }
@@ -8,9 +8,9 @@ Comms::Comms(uint8_t rx,uint8_t tx):_serial(rx,tx)
 
 void Comms::SendMessage(MessageHeader* message)
 {   
-    byte* p=(byte*)message;
-    byte* end=p+message->length;
-    while(p<end)
+    byte* p = (byte*)message;
+    byte* end = p+message->length;
+    while(p < end)
     {
         _serial.write(*p);
         p++;
@@ -19,19 +19,30 @@ void Comms::SendMessage(MessageHeader* message)
 
 bool Comms::ReceiveMessage(MessageHeader* message)
 {
-    if(!(_serial.available()>0))
+    if(!(_serial.available() > 0))
     {
         return false;
     }
-    byte size=_serial.read();
-    byte* p=(byte*)message;
-    message->length=size;
-    byte* end=p+size;
+    byte size = _serial.read();
+    byte* p = (byte*)message;
+    message->length = size;
+    byte* end = p + size;
     p++;
     while(p<end)
     {
-        *p=_serial.read();
-        p++;
+        if(_serial.available() > 0)
+        {
+            *p = _serial.read();
+            p++;
+        }
     }
     return true;
+}
+
+void Comms::PollMessage() {
+    MessageHeader message;    
+    if(ReceiveMessage(&message))
+    {
+        DispatchMessage(&message);
+    }
 }

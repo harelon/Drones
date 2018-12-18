@@ -5,4 +5,4 @@ SetUpColorSensor	KEYWORD2
 SendColor	KEYWORD2
 SetUpHeightSensor 	KEYWORD2
 SendHeight	KEYWORD2
-RecieveMessage	KEYWORD2
+ReceiveMessage	KEYWORD2

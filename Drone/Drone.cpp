@@ -68,7 +68,38 @@ void Drone::SendHeight()
     SendMessage(&response.header);
 }
 
-bool Drone::RecieveMessage(MessageHeader* message)
+bool Drone::ReceiveMessage(MessageHeader* message)
 {    
     return Comms::ReceiveMessage(message);
+}
+
+void Drone::DispatchMessage(MessageHeader* message)
+{
+    switch (message->type)
+    {
+        case REQUEST_FOR_TEMPERATURE:
+            OnTemperatureRequest();
+            break;
+        case REQUEST_FOR_COLOR:
+            OnColorRequest();
+            break;
+        case REQUEST_FOR_HEIGHT:
+            OnHeightRequest();
+            break;
+    }
+}
+
+void OnTemperatureRequest()
+{
+    SendTemperature();
+}
+
+void OnColorRequest()
+{
+    SendColor();
+}
+
+void OnHeightRequest()
+{
+    SendHeight();
 }

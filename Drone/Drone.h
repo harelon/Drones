@@ -16,14 +16,25 @@ class Drone:Comms
         uint16_t red_light = 0;
         uint16_t green_light = 0;
         uint16_t blue_light = 0;
+    protected:
+        void virtual OnColorResponse(ColorResponse *msg) {}
+        void virtual OnTemperatureResponse(TemperatureResponse *msg) {}
+        void virtual OnHeightResponse(HeightResponse *msg) {}
+
+        void SendTemperature();
+        void SendColor();
+        void SendHeight();
+        bool ReceiveMessage(MessageHeader* message);
+
     public:
         Drone(uint8_t rx,uint8_t tx);
-        Drone* SetUpTempSensor();
-        void SendTemperature();
+        Drone* SetUpTempSensor();        
         Drone* SetUpColorSensor();
-        void SendColor();
         Drone* SetUpHeightSensor();
-        void SendHeight();
-        bool RecieveMessage(MessageHeader* message);
+        void PollMessage();
+        
+        
+        
+
 };
 #endif

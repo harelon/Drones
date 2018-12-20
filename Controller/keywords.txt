@@ -1,5 +1,3 @@
 Controller	KEYWORD1
-RequestForTemperature	KEYWORD2
-RequestForColor	KEYWORD2
-RequestForHeight	KEYWORD2
-ReceiveMessage 	KEYWORD2
+PollMessage	KEYWORD2
+

@@ -34,9 +34,24 @@ void Controller::RequestForHeight()
     SendMessage(&request.header);
 }
 
-bool Controller::ReceiveMessage(MessageHeader* message)
-{    
-    return Comms::ReceiveMessage(message);
+void Controller::RequestForBuzzOn()
+{
+    BuzzRequest request;
+
+    request.header.length=sizeof(BuzzRequest);
+    request.header.type=REQUEST_BUZZ_ON;
+
+    SendMessage(&request.header);
+}
+
+void Controller::RequestForBuzzOff()
+{
+    BuzzRequest request;
+
+    request.header.length=sizeof(BuzzRequest);
+    request.header.type=REQUEST_BUZZ_OFF;
+
+    SendMessage(&request.header);
 }
 
 void Controller::DispatchMessage(MessageHeader* message)
@@ -52,22 +67,11 @@ void Controller::DispatchMessage(MessageHeader* message)
         case RESPONSE_FOR_HEIGHT:
             OnHeightResponse((HeightResponse*)message);
             break;
+        case RESPONSE_BUZZ_ON:
+            OnBuzzResponse((BuzzResponse*)message);
+            break;
+        case RESPONSE_BUZZ_OFF:
+            OnBuzzResponse((BuzzResponse*)message);
+            break;
     }
-}
-
-//to be defined by boltan
-
-void OnTemperatureResponse(TemperatureResponse* message)
-{
-
-}
-
-void OnColorResponse(ColorResponse* message)
-{
-
-}
-
-void OnHeightResponse(HeightResponse* message)
-{
-
 }

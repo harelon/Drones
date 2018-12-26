@@ -2,111 +2,120 @@
 
 ScreenCustom::ScreenCustom(uint8_t rx,uint8_t tx):Controller(rx,tx)
 {
+  lcd.begin();
+  lcdtouch.begin();
+  lcdtouch.InitTypeTouch(2);//0,1,2
+  lcd.setRotation(1);//0,1,2,3
+  lcd.setFont(2);
 
+  _buttons[0].Init(BUTTON_COLOR, 20,20,70,40,"Color", WHITE, RED);
+  _buttons[1].Init(BUTTON_TEMP, 20,80,70,40,"Temp", WHITE, RED);
+  _buttons[2].Init(BUTTON_HEIGHT, 120,20,80,40,"Height", WHITE, RED);
+  _buttons[3].Init(BUTTON_BUZZ_ON, 120,80,90,40,"Buzz on", WHITE, RED);
+  _buttons[4].Init(BUTTON_BUZZ_OFF, 120,140,110,40,"Buzz off", WHITE, RED);
+  _statusPanel.Init(0,200,240,60,"some text",GREEN,BLACK);
+  _resultPanel.Init(0,261,240,60,"some text",YELLOW,BLACK);
+
+  MainScreen();
 }
 
-void OnTemperatureResponse(TemperatureResponse* message)
+void ScreenCustom::OnTemperatureResponse(TemperatureResponse* message)
 {
-    lcd.setColor(YELLOW, BLACK);
-    lcd.gotoxy (25, 30);
-    lcd.print(message->temperature);
+  _statusPanel.SetText("Temperature responded");
+  _resultPanel.SetText(String(message->temperature));
 }
 
-void OnColorResponse(ColorResponse* message)
+void ScreenCustom::OnColorResponse(ColorResponse* message)
 {
-    lcd.setColor(YELLOW, BLACK);
-    lcd.gotoxy (25, 30);
-    lcd.print("red:");
-    lcd.gotoxy (25, 110);
-    lcd.print("green:");
-    lcd.gotoxy (25, 150);
-    lcd.print("blue:");
-    lcd.gotoxy (110, 70);
-    lcd.print(message->color.r);
-    lcd.gotoxy (110, 110);
-    lcd.print(message->color.g);
-    lcd.gotoxy (110, 150);
-    lcd.print(message->color.b);
+  _statusPanel.SetText("Color responded");
+  _resultPanel.SetText(String(message->color.r+', '+message->color.g+', '+message->color.b));
 }
 
-void OnHeightResponse(HeightResponse* message)
+void ScreenCustom::OnHeightResponse(HeightResponse* message)
 {
-    lcd.setColor(YELLOW, BLACK);
-    lcd.gotoxy (25, 30);
-    lcd.print(message->height);
+  _statusPanel.SetText("Height responded");
+  _resultPanel.SetText(String(message->height));
 }
 
-void printGeneralScreen()
+void ScreenCustom::OnBuzzResponse(BuzzResponse* message)
+{
+  _statusPanel.SetText("Buzzer responded");
+  _resultPanel.SetText(String(message->header.type));
+}
+
+void ScreenCustom::TemperatureReq()
+{
+  _statusPanel.SetText("Temperature pressed");
+  RequestForTemperature();
+  _statusPanel.SetText("Waiting for temperature");
+}
+
+void ScreenCustom::ColorReq()
+{
+  _statusPanel.SetText("Color pressed");
+  RequestForColor();
+  _statusPanel.SetText("Waiting for color");
+}
+
+void ScreenCustom::HeightReq()
+{
+  _statusPanel.SetText("Height pressed");
+  RequestForHeight();
+  _statusPanel.SetText("Waiting for height");
+}
+
+void ScreenCustom::BuzzOnReq()
+{
+  _statusPanel.SetText("Buzzer-on pressed");
+  RequestForBuzzOn();
+}
+
+void ScreenCustom::BuzzOffReq()
+{
+  _statusPanel.SetText("Buzzer-off pressed");
+  RequestForBuzzOff();
+}
+
+void ScreenCustom::MainScreen()
 {
   lcd.clrscr(BLACK);
-  lcd.fillRoundRect (160, 270, 70, 40, 5, YELLOW);
-  lcd.setColor(BLACK, YELLOW);
-  lcd.setFont(2);
-  lcd.gotoxy(170, 280);
-  lcd.print("Main");
-  lcd.setFont(3);
+  
+  for(int i = 0; i < MAX_BUTTONS; i++)
+  {
+    _buttons[i].Draw();
+  }
+
+  _statusPanel.Draw();
+  _resultPanel.Draw();
 }
 
-void MainScreen()
+void ScreenCustom::PollScreen()
 {
-    lcd.clrscr(BLACK);
-    lcd.setFont(2);
-    lcd.fillRoundRect(20, 20, 70, 40, 5, RED);
-    lcd.fillRoundRect(20, 80, 70, 40, 5, RED);
-    lcd.fillRoundRect(20, 140, 80, 40, 5, RED);
-    lcd.fillRoundRect(20, 200, 80, 40, 5, RED);
-    lcd.fillRoundRect(20, 260, 105, 40, 5, RED);
-    lcd.setColor(WHITE, RED);
-    lcd.gotoxy(25, 30);
-    lcd.print("COLOR");
-    lcd.gotoxy(25, 90);
-    lcd.print("TEMP");
-    lcd.gotoxy(25, 150);
-    lcd.print("HEIGTH");
-    lcd.gotoxy(25, 210);
-    lcd.print("BUZZER");
-    lcd.gotoxy(25, 270);
-    lcd.print("RF DEBUG");
-
-    if (digitalRead(2) == 0)
+  word x,y;
+  ButtonIds buttonId = BUTTON_INVALID;
+  if(digitalRead(2) == 0)
+  {
+    lcdtouch.readxy();
+    x = lcdtouch.readx();
+    y = lcdtouch.ready();
+    
+    for(int i = 0; i < MAX_BUTTONS; i++)
     {
-        lcdtouch.readxy();
-        x = lcdtouch.readx();
-        y = lcdtouch.ready();
-        if ((x > 20) && (x < 90) && (y > 20) && (y < 60))
-        {
-          while (digitalRead(2) != 0 || !((x > 20) && (x < 90) && (y > 80) && (y < 120)))
-          {
-            printGeneralScreen();
-            Controller.RequestForColor();
-            delay(500);
-          }
-        }
-        if ((x > 20) && (x < 90) && (y > 80) && (y < 120))
-        {
-          while (digitalRead(2) != 0 || !((x > 20) && (x < 90) && (y > 80) && (y < 120)))
-          {
-            printGeneralScreen();
-            Controller.RequestForTemperature();
-            delay(500);
-          }
-        }
-        if ((x > 20) && (x < 90) && (y > 140) && (y < 180))
-        {
-            while (digitalRead(2) != 0 || !((x > 20) && (x < 90) && (y > 80) && (y < 120)))
-            {
-                printGeneralScreen();
-                Controller.RequestForHeight();
-                delay(500);
-            }
-        }
-        if ((x > 20) && (x < 90) && (y > 200) && (y < 240))
-        {
-          /*buzzer screen*/
-        }
-        if ((x > 20) && (x < 90) && (y > 260) && (y < 300))
-        {
-          /*RF debug screen.no longer needed*/
-        }
+      if(_buttons[i].IsClicked(x,y))
+      {
+          buttonId = _buttons[i].GetId();
+          break;
+      }
+    }
+  }
+  
+  switch (buttonId)
+    {
+      case BUTTON_COLOR:ColorReq(); break;
+      case BUTTON_TEMP: TemperatureReq(); break;
+      case BUTTON_HEIGHT: HeightReq(); break;
+      case BUTTON_BUZZ_ON: BuzzOnReq(); break;
+      case BUTTON_BUZZ_OFF: BuzzOffReq(); break;
+      default: break;
     }
 }

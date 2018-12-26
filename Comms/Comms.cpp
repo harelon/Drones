@@ -44,5 +44,5 @@ void Comms::PollMessage() {
     if(ReceiveMessage(&message))
     {
         DispatchMessage(&message);
-    }
+    }    
 }

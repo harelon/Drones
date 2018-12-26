@@ -7,7 +7,8 @@
 #include <Comms.h>
 
 class Drone:Comms
-{   private:
+{   
+    private:
         HDC1080JS _TempSensor;
         //HeightSensor;
         SparkFun_APDS9960 _LightSensor;
@@ -28,13 +29,9 @@ class Drone:Comms
 
     public:
         Drone(uint8_t rx,uint8_t tx);
-        Drone* SetUpTempSensor();        
+        Drone* SetUpTempSensor();
         Drone* SetUpColorSensor();
-        Drone* SetUpHeightSensor();
-        void PollMessage();
-        
-        
-        
+        Drone* SetUpHeightSensor();                       
 
 };
 #endif

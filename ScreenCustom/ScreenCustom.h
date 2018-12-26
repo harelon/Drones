@@ -7,15 +7,33 @@
 #include <SPI.h>
 
 #include "Controller.h"
+#include "Button.h"
+#include "Panel.h"
 
-class ScreenCustom:Controller
+#define MAX_BUTTONS 5
+
+class ScreenCustom : public Controller
 {
+    private:
+        Button _buttons[MAX_BUTTONS];
+        Panel _statusPanel;
+        Panel _resultPanel;
     protected:
-        void override OnTemperatureResponse(TemperatureResponse* message);
-        void override OnColorResponse(ColorResponse* message);
-        void override OnHeightResponse(HeightResponse* message);
+        void OnTemperatureResponse(TemperatureResponse* message) override;
+        void OnColorResponse(ColorResponse* message) override;
+        void OnHeightResponse(HeightResponse* message) override;
+        void OnBuzzResponse(BuzzResponse* message) override;
+        void PrintGeneralScreen();
+        void MainScreen();        
+        void Mainloop();
+        void BuzzOnReq();
+        void BuzzOffReq();
+        void HeightReq();
+        void TemperatureReq();
+        void ColorReq();
     public:
         ScreenCustom(uint8_t rx, uint8_t tx);
+        void PollScreen();
 };
 
 #endif

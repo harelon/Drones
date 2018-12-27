@@ -12,11 +12,11 @@ typedef struct{
 class Comms
 {
     private:
-         SoftwareSerial _serial;
-         byte messageSize;
-         byte *p;
-         byte *end;
+         SoftwareSerial _serial;         
+         byte *pRecieve;
+         byte *endRecieve;
          bool gotLength=false;
+         MessageHeader MainMessage;
     protected:
         void SendMessage(MessageHeader* message);
         bool ReceiveMessage(MessageHeader* message);

@@ -5,14 +5,14 @@ Comms::Comms(uint8_t rx, uint8_t tx) : _serial(rx, tx)
     _serial.begin(9600);
 }
 
-
 void Comms::SendMessage(MessageHeader* message)
 {   
-    byte* p = (byte*)message;
-    byte* end = p+message->length;
+    byte *p = (byte*)message;
+    byte *end = p+message->length;
     while(p < end)
     {
         _serial.write(*p);
+        Serial.println(*p);
         p++;
     }
 }
@@ -23,27 +23,33 @@ bool Comms::ReceiveMessage(MessageHeader* message)
     {
         if(!gotLength)
         {
+            pRecieve=(byte*)message;
+            *pRecieve=_serial.read();            
+            Serial.println(*pRecieve);            
             gotLength=true;
-            messageSize=_serial.read();
-            p=(byte*)message;
-            end=p+messageSize;
+            endRecieve=pRecieve+(message->length);
+            pRecieve++;
         }
-        else 
+        else
         {
-            *p = _serial.read();
-            p++;
+            *pRecieve = _serial.read();
+            Serial.println(*pRecieve);            
+            pRecieve++;
         }
     }
-    if(p==end)
-    {
-        gotLength=false;
-    }    
+    if(pRecieve==endRecieve)
+    {        
+        gotLength=false;        
+        return true;
+    }
+    return false;
 }
 
 void Comms::PollMessage() {
-    MessageHeader message;    
-    if(ReceiveMessage(&message))
-    {
-        DispatchMessage(&message);
-    }    
+
+    if(ReceiveMessage(&MainMessage))
+    {        
+        this->DispatchMessage(&MainMessage);
+    }
+    delay(500);
 }

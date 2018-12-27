@@ -23,7 +23,8 @@ class Drone: public Comms
         void virtual OnHeightRequest();
         void SendTemperature();
         void SendColor();
-        void SendHeight();        
+        void SendHeight();
+        void DispatchMessage(MessageHeader* message) override;
     public:
         Drone(uint8_t rx,uint8_t tx);
         Drone* SetUpTempSensor();

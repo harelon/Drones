@@ -17,9 +17,7 @@ class Controller : public Comms
         void virtual OnColorResponse(ColorResponse* message)=0;
         void virtual OnHeightResponse(HeightResponse* message)=0;
         void virtual OnBuzzResponse(BuzzResponse* message)=0;
-
     public:
-        Controller(uint8_t rx, uint8_t tx);        
-
+        Controller(uint8_t rx, uint8_t tx);
 };
 #endif

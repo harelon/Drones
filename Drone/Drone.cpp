@@ -68,11 +68,6 @@ void Drone::SendHeight()
     SendMessage(&response.header);
 }
 
-bool Drone::ReceiveMessage(MessageHeader* message)
-{    
-    return Comms::ReceiveMessage(message);
-}
-
 void Drone::DispatchMessage(MessageHeader* message)
 {
     switch (message->type)
@@ -87,6 +82,7 @@ void Drone::DispatchMessage(MessageHeader* message)
             OnHeightRequest();
             break;
     }
+    Serial.println("called dispatch message");
 }
 
 void Drone::OnTemperatureRequest()

@@ -19,24 +19,25 @@ void Comms::SendMessage(MessageHeader* message)
 
 bool Comms::ReceiveMessage(MessageHeader* message)
 {
-    if(!(_serial.available() > 0))
+    if(_serial.available()>0)
     {
-        return false;
-    }
-    byte size = _serial.read();
-    byte* p = (byte*)message;
-    message->length = size;
-    byte* end = p + size;
-    p++;
-    while(p<end)
-    {
-        if(_serial.available() > 0)
+        if(!gotLength)
+        {
+            gotLength=true;
+            messageSize=_serial.read();
+            p=(byte*)message;
+            end=p+messageSize;
+        }
+        else 
         {
             *p = _serial.read();
             p++;
         }
     }
-    return true;
+    if(p==end)
+    {
+        gotLength=false;
+    }    
 }
 
 void Comms::PollMessage() {

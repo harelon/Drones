@@ -6,7 +6,7 @@
 
 #include <Comms.h>
 
-class Drone:Comms
+class Drone: public Comms
 {   
     private:
         HDC1080JS _TempSensor;
@@ -18,20 +18,16 @@ class Drone:Comms
         uint16_t green_light = 0;
         uint16_t blue_light = 0;
     protected:
-        void virtual OnColorResponse(ColorResponse *msg) {}
-        void virtual OnTemperatureResponse(TemperatureResponse *msg) {}
-        void virtual OnHeightResponse(HeightResponse *msg) {}
-
+        void virtual OnColorRequest();
+        void virtual OnTemperatureRequest();
+        void virtual OnHeightRequest();
         void SendTemperature();
         void SendColor();
-        void SendHeight();
-        bool ReceiveMessage(MessageHeader* message);
-
+        void SendHeight();        
     public:
         Drone(uint8_t rx,uint8_t tx);
         Drone* SetUpTempSensor();
         Drone* SetUpColorSensor();
-        Drone* SetUpHeightSensor();                       
-
+        Drone* SetUpHeightSensor();
 };
 #endif

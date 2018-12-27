@@ -12,12 +12,15 @@ typedef struct{
 class Comms
 {
     private:
-        SoftwareSerial _serial;
-
+         SoftwareSerial _serial;
+         byte messageSize;
+         byte *p;
+         byte *end;
+         bool gotLength=false;
     protected:
         void SendMessage(MessageHeader* message);
-        bool ReceiveMessage(MessageHeader* message);        
-        void virtual DispatchMessage(MessageHeader* message) = 0;       
+        bool ReceiveMessage(MessageHeader* message);
+        void virtual DispatchMessage(MessageHeader* message) = 0;
     public:
         Comms(uint8_t rx,uint8_t tx);
         void PollMessage();

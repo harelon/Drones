@@ -11,9 +11,7 @@ class Controller : public Comms
         void RequestForColor();
         void RequestForHeight();
         void RequestForBuzzOn();
-        void RequestForBuzzOff();
-
-        bool ReceiveMessage(MessageHeader* message);        
+        void RequestForBuzzOff();             
 
         void virtual OnTemperatureResponse(TemperatureResponse* message)=0;
         void virtual OnColorResponse(ColorResponse* message)=0;

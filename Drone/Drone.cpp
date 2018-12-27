@@ -89,17 +89,17 @@ void Drone::DispatchMessage(MessageHeader* message)
     }
 }
 
-void OnTemperatureRequest()
+void Drone::OnTemperatureRequest()
 {
     SendTemperature();
 }
 
-void OnColorRequest()
+void Drone::OnColorRequest()
 {
     SendColor();
 }
 
-void OnHeightRequest()
+void Drone::OnHeightRequest()
 {
     SendHeight();
 }

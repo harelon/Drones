@@ -22,8 +22,7 @@ class ScreenCustom : public Controller
         void OnTemperatureResponse(TemperatureResponse* message) override;
         void OnColorResponse(ColorResponse* message) override;
         void OnHeightResponse(HeightResponse* message) override;
-        void OnBuzzResponse(BuzzResponse* message) override;
-        void PrintGeneralScreen();
+        void OnBuzzResponse(BuzzResponse* message) override;        
         void MainScreen();        
         void Mainloop();
         void BuzzOnReq();

@@ -59,19 +59,19 @@ void Controller::DispatchMessage(MessageHeader* message)
     switch (message->type)
     {
         case RESPONSE_FOR_TEMPERATURE:
-            OnTemperatureResponse((TemperatureResponse*)message);
+            this->OnTemperatureResponse((TemperatureResponse*)message);
             break;
         case RESPONSE_FOR_COLOR:
-            OnColorResponse((ColorResponse*)message);
+            this->OnColorResponse((ColorResponse*)message);
             break;
         case RESPONSE_FOR_HEIGHT:
-            OnHeightResponse((HeightResponse*)message);
+            this->OnHeightResponse((HeightResponse*)message);
             break;
         case RESPONSE_BUZZ_ON:
-            OnBuzzResponse((BuzzResponse*)message);
+            this->OnBuzzResponse((BuzzResponse*)message);
             break;
         case RESPONSE_BUZZ_OFF:
-            OnBuzzResponse((BuzzResponse*)message);
+            this->OnBuzzResponse((BuzzResponse*)message);
             break;
-    }
+    }   
 }

@@ -113,6 +113,7 @@ void Drone::TurnBuzzerOn()
     response.header.length = sizeof(BuzzResponse);
     response.header.type = RESPONSE_BUZZ_ON;
 
+<<<<<<< HEAD
     SendMessage(&response.header);
 }
 Drone* Drone::SetUpBuzzer(int buzzerId)
@@ -121,6 +122,8 @@ Drone* Drone::SetUpBuzzer(int buzzerId)
     pinMode(_buzzerId, OUTPUT);
     return this;
 }
+=======
+>>>>>>> fixed recieve message not reseting pRecieve on finish recieving
 void Drone::DispatchMessage(MessageHeader* message)
 {
     switch (message->type)
@@ -134,6 +137,7 @@ void Drone::DispatchMessage(MessageHeader* message)
         case REQUEST_FOR_HEIGHT:
             OnHeightRequest();
             break;
+<<<<<<< HEAD
         case REQUEST_BUZZ_ON:
             OnBuzzerOnRequest();
             break;
@@ -142,6 +146,9 @@ void Drone::DispatchMessage(MessageHeader* message)
             break;
     }
     Serial.println("called dispatch message");
+=======
+    }    
+>>>>>>> fixed recieve message not reseting pRecieve on finish recieving
 }
 
 void Drone::OnTemperatureRequest()

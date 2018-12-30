@@ -13,13 +13,11 @@ class Comms
 {
     private:
          SoftwareSerial _serial;         
-         byte *pRecieve;
+         byte *pRecieve=null;
          byte *endRecieve;
          bool gotLength=false;
-         MessageHeader MainMessage;
-         const MaxLength=6;
-         byte skipBytes;
-         bool skip=false;
+         byte msgBuffer[20];
+         MessageHeader *pMainMessage;
     protected:
         void SendMessage(MessageHeader* message);
         bool ReceiveMessage(MessageHeader* message);
@@ -27,7 +25,6 @@ class Comms
     public:
         Comms(uint8_t rx,uint8_t tx);
         void PollMessage();
-
 };
 
 enum MessageTypes
@@ -45,9 +42,9 @@ enum MessageTypes
 };
 
 typedef struct {
-  byte r;
-  byte g;
-  byte b;
+  uint16_t r;
+  uint16_t g;
+  uint16_t b;
 } rgbColor;
 
 typedef struct{

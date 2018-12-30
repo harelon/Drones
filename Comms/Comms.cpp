@@ -2,6 +2,7 @@
 
 Comms::Comms(uint8_t rx, uint8_t tx) : _serial(rx, tx)
 {    
+    pMainMessage = (MessageHeader *)msgBuffer;
     _serial.begin(9600);
 }
 
@@ -24,31 +25,21 @@ bool Comms::ReceiveMessage(MessageHeader* message)
         if(!gotLength)
         {
             pRecieve=(byte*)message;
-            *pRecieve=_serial.read();
-            
-            Serial.println(*pRecieve);            
+            *pRecieve=_serial.read();                    
             gotLength=true;
-            if(*pRecieve>MaxLength)
-            {
-                checkFormat();
-            }
             endRecieve=pRecieve+(message->length);
             pRecieve++;
         }
-        else if(skip)
-        {
-            _serial.read();
-        }
         else
         {
-            *pRecieve = _serial.read();
-            Serial.println(*pRecieve);            
+            *pRecieve = _serial.read();            
             pRecieve++;
         }
     }
     if(pRecieve==endRecieve)
     {        
-        gotLength=false;        
+        gotLength=false;  
+        pRecieve=(byte*)message;      
         return true;
     }
     return false;
@@ -56,21 +47,8 @@ bool Comms::ReceiveMessage(MessageHeader* message)
 
 void Comms::PollMessage() {
 
-    if(ReceiveMessage(&MainMessage))
+    if(ReceiveMessage(pMainMessage))
     {        
-        this->DispatchMessage(&MainMessage);
-    }
-    delay(1000);
-}
-void checkFormat()
-{
-    length=_serial.read();
-    if((length<7&&length>3)||length==2)
-    {
-        byte type=_serial.read();
-        if(type%2==0&&type<=10&&type>=1)
-        {
-            
-        }
-    }
+        this->DispatchMessage(pMainMessage);
+    }    
 }

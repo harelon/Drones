@@ -37,16 +37,16 @@ void Drone::SendColor()
 
     response.header.length=sizeof(ColorResponse);
     response.header.type=RESPONSE_FOR_COLOR;
-    if(!_LightSensor.readAmbientLight(ambient_light) ||
+    if( 
        !_LightSensor.readRedLight(red_light) ||
        !_LightSensor.readGreenLight(green_light) ||
        !_LightSensor.readBlueLight(blue_light)){
         return;
     }
 
-    response.color.r = (int)((float)(red_light & 0xFF00) * transmitionRate) >> 8;
-    response.color.g = (int)((float)(green_light & 0xFF00) * transmitionRate) >> 8;
-    response.color.b = (int)((float)(blue_light & 0xFF00) * transmitionRate) >> 8;
+    response.color.r = red_light*transmitionRate;
+    response.color.g = green_light*transmitionRate;
+    response.color.b = blue_light*transmitionRate;
 
     SendMessage(&response.header);
 }
@@ -68,6 +68,30 @@ void Drone::SendHeight()
     SendMessage(&response.header);
 }
 
+void Drone::TurnBuzzerOff()
+{
+    digitalWrite(_buzzerId,LOW);
+    BuzzResponse response;
+    response.header.length=sizeof(BuzzResponse);
+    response.header.type=RESPONSE_BUZZ_OFF;
+
+    SendMessage(&response.header);
+}
+void Drone::TurnBuzzerOn()
+{
+    digitalWrite(_buzzerId,HIGH);
+    BuzzResponse response;
+    response.header.length=sizeof(BuzzResponse);
+    response.header.type=RESPONSE_BUZZ_ON;
+
+    SendMessage(&response.header);
+}
+Drone* Drone::SetUpBuzzer(int buzzerId)
+{
+    _buzzerId=buzzerId;
+    pinMode(_buzzerId,OUTPUT);
+    return this;
+}
 void Drone::DispatchMessage(MessageHeader* message)
 {
     switch (message->type)
@@ -80,6 +104,12 @@ void Drone::DispatchMessage(MessageHeader* message)
             break;
         case REQUEST_FOR_HEIGHT:
             OnHeightRequest();
+            break;
+        case REQUEST_BUZZ_ON:
+            OnBuzzerOnRequest();
+            break;
+        case REQUEST_BUZZ_OFF:
+            OnBuzzerOffRequest();
             break;
     }
     Serial.println("called dispatch message");
@@ -98,4 +128,14 @@ void Drone::OnColorRequest()
 void Drone::OnHeightRequest()
 {
     SendHeight();
+}
+
+void Drone::OnBuzzerOnRequest()
+{
+    TurnBuzzerOn();
+}
+
+void Drone::OnBuzzerOffRequest()
+{
+    TurnBuzzerOff();
 }

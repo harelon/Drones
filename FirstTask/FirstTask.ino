@@ -5,7 +5,7 @@
 #define greenPort2 4
 #define bluePort 5
 Ultrasonic sensor(9, 10);
-#define mete
+#define meters 100
 
 void setup() 
 {

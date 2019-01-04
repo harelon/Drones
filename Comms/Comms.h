@@ -13,8 +13,8 @@ class Comms
 {
     private:
          SoftwareSerial _serial;         
-         byte *pRecieve=null;
-         byte *endRecieve;
+         byte *pRecieve=nullptr;
+         byte *endRecieve=pRecieve-1;
          bool gotLength=false;
          byte msgBuffer[20];
          MessageHeader *pMainMessage;

@@ -31,7 +31,7 @@ class Drone: public Comms
         void TurnBuzzerOff();
         void DispatchMessage(MessageHeader* message) override;
     public:
-        Drone(uint8_t rx,uint8_t tx);
+        Drone(uint8_t rx, uint8_t tx);
         Drone* SetUpTempSensor();
         Drone* SetUpColorSensor();
         Drone* SetUpHeightSensor();

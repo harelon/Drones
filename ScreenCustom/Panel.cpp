@@ -16,9 +16,9 @@ void Panel::Init(int x, int y, int width, int height, String text, uint16_t fore
 
 void Panel::Draw()
 {
-    lcd.fillRoundRect(_x+1, _y+1, _width-2, _height-2, 0, BLACK);
+    lcd.fillRoundRect(_x + 1, _y + 1, _width - 2, _height - 2, 0, BLACK);
     lcd.drawRoundRect(_x, _y, _width, _height, 0, _foreColor);
-    lcd.gotoxy(_x+5, _y+10);
+    lcd.gotoxy(_x + 5, _y + 10);
     lcd.setColor(_foreColor, _backColor);
     lcd.print(_text);
 }

@@ -8,8 +8,8 @@ void Controller::RequestForTemperature()
 {
     TemperatureRequest request;
 
-    request.header.length=sizeof(TemperatureRequest);
-    request.header.type=REQUEST_FOR_TEMPERATURE;
+    request.header.length = sizeof(TemperatureRequest);
+    request.header.type = REQUEST_FOR_TEMPERATURE;
 
     SendMessage(&request.header);
 }
@@ -18,8 +18,8 @@ void Controller::RequestForColor()
 {
     ColorRequest request;
 
-    request.header.length=sizeof(ColorRequest);
-    request.header.type=REQUEST_FOR_COLOR;
+    request.header.length = sizeof(ColorRequest);
+    request.header.type = REQUEST_FOR_COLOR;
 
     SendMessage(&request.header);
 }
@@ -28,8 +28,8 @@ void Controller::RequestForHeight()
 {
     HeightRequest request;
 
-    request.header.length=sizeof(HeightRequest);
-    request.header.type=REQUEST_FOR_HEIGHT;
+    request.header.length = sizeof(HeightRequest);
+    request.header.type = REQUEST_FOR_HEIGHT;
 
     SendMessage(&request.header);
 }
@@ -38,8 +38,8 @@ void Controller::RequestForBuzzOn()
 {
     BuzzRequest request;
 
-    request.header.length=sizeof(BuzzRequest);
-    request.header.type=REQUEST_BUZZ_ON;
+    request.header.length = sizeof(BuzzRequest);
+    request.header.type = REQUEST_BUZZ_ON;
 
     SendMessage(&request.header);
 }
@@ -48,8 +48,8 @@ void Controller::RequestForBuzzOff()
 {
     BuzzRequest request;
 
-    request.header.length=sizeof(BuzzRequest);
-    request.header.type=REQUEST_BUZZ_OFF;
+    request.header.length = sizeof(BuzzRequest);
+    request.header.type = REQUEST_BUZZ_OFF;
 
     SendMessage(&request.header);
 }

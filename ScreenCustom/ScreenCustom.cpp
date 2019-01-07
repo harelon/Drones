@@ -1,6 +1,6 @@
 #include <ScreenCustom.h>
 
-ScreenCustom::ScreenCustom(uint8_t rx,uint8_t tx):Controller(rx,tx)
+ScreenCustom::ScreenCustom(uint8_t rx, uint8_t tx):Controller(rx, tx)
 {
   lcd.begin();
   lcdtouch.begin();
@@ -8,13 +8,13 @@ ScreenCustom::ScreenCustom(uint8_t rx,uint8_t tx):Controller(rx,tx)
   lcd.setRotation(1);//0,1,2,3
   lcd.setFont(2);
 
-  _buttons[0].Init(BUTTON_COLOR, 20,20,70,40,"Color", WHITE, RED);
-  _buttons[1].Init(BUTTON_TEMP, 20,80,70,40,"Temp", WHITE, RED);
-  _buttons[2].Init(BUTTON_HEIGHT, 120,20,80,40,"Height", WHITE, RED);
-  _buttons[3].Init(BUTTON_BUZZ_ON, 120,80,90,40,"Buzz on", WHITE, RED);
-  _buttons[4].Init(BUTTON_BUZZ_OFF, 120,140,110,40,"Buzz off", WHITE, RED);
-  _statusPanel.Init(0,200,240,60,"some text",GREEN,BLACK);
-  _resultPanel.Init(0,261,240,60,"some text",YELLOW,BLACK);
+  _buttons[0].Init(BUTTON_COLOR, 20, 20, 70, 40, "Color", WHITE, RED);
+  _buttons[1].Init(BUTTON_TEMP, 20, 80, 70, 40, "Temp", WHITE, RED);
+  _buttons[2].Init(BUTTON_HEIGHT, 120, 20, 80, 40, "Height", WHITE, RED);
+  _buttons[3].Init(BUTTON_BUZZ_ON, 120, 80, 90, 40, "Buzz on", WHITE, RED);
+  _buttons[4].Init(BUTTON_BUZZ_OFF, 120, 140, 110, 40, "Buzz off", WHITE, RED);
+  _statusPanel.Init(0, 200, 240, 60, "some text", GREEN, BLACK);
+  _resultPanel.Init(0, 261, 240, 60, "some text", YELLOW, BLACK);
 
   MainScreen();
 }
@@ -28,7 +28,7 @@ void ScreenCustom::OnTemperatureResponse(TemperatureResponse* message)
 void ScreenCustom::OnColorResponse(ColorResponse* message)
 {
   _statusPanel.SetText("Color responded");
-  _resultPanel.SetText(String(message->color.r+', '+message->color.g+', '+message->color.b));
+  _resultPanel.SetText(String(message->color.r+', ' + message->color.g + ', ' + message->color.b));
 }
 
 void ScreenCustom::OnHeightResponse(HeightResponse* message)
@@ -91,7 +91,7 @@ void ScreenCustom::MainScreen()
 
 void ScreenCustom::PollScreen()
 {
-  word x,y;
+  word x, y;
   ButtonIds buttonId = BUTTON_INVALID;
   if(digitalRead(2) == 0)
   {
@@ -101,7 +101,7 @@ void ScreenCustom::PollScreen()
     
     for(int i = 0; i < MAX_BUTTONS; i++)
     {
-      if(_buttons[i].IsClicked(x,y))
+      if(_buttons[i].IsClicked(x, y))
       {
           buttonId = _buttons[i].GetId();
           break;

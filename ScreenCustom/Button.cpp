@@ -25,7 +25,7 @@ void Button::Draw()
 
 bool Button::IsClicked(int x, int y)
 {
-    return (x >= _x && x < (_x+_width) && y >= _y && y < (_y+_height));
+    return (x >= _x && x < (_x + _width) && y >= _y && y < (_y + _height));
 }
 
 ButtonIds Button::GetId()

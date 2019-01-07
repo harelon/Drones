@@ -13,10 +13,10 @@ class Controller : public Comms
         void RequestForBuzzOn();
         void RequestForBuzzOff();             
 
-        void virtual OnTemperatureResponse(TemperatureResponse* message)=0;
-        void virtual OnColorResponse(ColorResponse* message)=0;
-        void virtual OnHeightResponse(HeightResponse* message)=0;
-        void virtual OnBuzzResponse(BuzzResponse* message)=0;
+        void virtual OnTemperatureResponse(TemperatureResponse* message) = 0;
+        void virtual OnColorResponse(ColorResponse* message) = 0;
+        void virtual OnHeightResponse(HeightResponse* message) = 0;
+        void virtual OnBuzzResponse(BuzzResponse* message) = 0;
     public:
         Controller(uint8_t rx, uint8_t tx);
 };

@@ -14,18 +14,18 @@ void Drone::SendTemperature()
 {
     TemperatureResponse response;
 
-    response.header.length=sizeof(TemperatureResponse);
-    response.header.type=RESPONSE_FOR_TEMPERATURE;
+    response.header.length = sizeof(TemperatureResponse);
+    response.header.type = RESPONSE_FOR_TEMPERATURE;
     
     _TempSensor.readTempHumid();
-    response.temperature=_TempSensor.getTemp();
+    response.temperature = _TempSensor.getTemp();
 
     SendMessage(&response.header);
 }
 
 Drone* Drone::SetUpColorSensor()
 {
-    _LightSensor=SparkFun_APDS9960();
+    _LightSensor = SparkFun_APDS9960();
     _LightSensor.init();
     _LightSensor.enableLightSensor(false);
     return this;
@@ -35,8 +35,8 @@ void Drone::SendColor()
 {
     ColorResponse response;
 
-    response.header.length=sizeof(ColorResponse);
-    response.header.type=RESPONSE_FOR_COLOR;
+    response.header.length = sizeof(ColorResponse);
+    response.header.type = RESPONSE_FOR_COLOR;
     if( 
        !_LightSensor.readRedLight(red_light) ||
        !_LightSensor.readGreenLight(green_light) ||
@@ -60,8 +60,8 @@ void Drone::SendHeight()
 {
     HeightResponse response;
 
-    response.header.length=sizeof(HeightResponse);
-    response.header.type=RESPONSE_FOR_HEIGHT;
+    response.header.length = sizeof(HeightResponse);
+    response.header.type = RESPONSE_FOR_HEIGHT;
     
    //response.height=;
 
@@ -70,26 +70,26 @@ void Drone::SendHeight()
 
 void Drone::TurnBuzzerOff()
 {
-    digitalWrite(_buzzerId,LOW);
+    digitalWrite(_buzzerId, LOW);
     BuzzResponse response;
-    response.header.length=sizeof(BuzzResponse);
-    response.header.type=RESPONSE_BUZZ_OFF;
+    response.header.length = sizeof(BuzzResponse);
+    response.header.type = RESPONSE_BUZZ_OFF;
 
     SendMessage(&response.header);
 }
 void Drone::TurnBuzzerOn()
 {
-    digitalWrite(_buzzerId,HIGH);
+    digitalWrite(_buzzerId, HIGH);
     BuzzResponse response;
-    response.header.length=sizeof(BuzzResponse);
-    response.header.type=RESPONSE_BUZZ_ON;
+    response.header.length = sizeof(BuzzResponse);
+    response.header.type = RESPONSE_BUZZ_ON;
 
     SendMessage(&response.header);
 }
 Drone* Drone::SetUpBuzzer(int buzzerId)
 {
-    _buzzerId=buzzerId;
-    pinMode(_buzzerId,OUTPUT);
+    _buzzerId = buzzerId;
+    pinMode(_buzzerId, OUTPUT);
     return this;
 }
 void Drone::DispatchMessage(MessageHeader* message)

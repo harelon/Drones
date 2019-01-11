@@ -12,7 +12,7 @@ class Drone: public Comms
         HDC1080JS _TempSensor;
         //HeightSensor;
         SparkFun_APDS9960 _LightSensor;
-        const float transmitionRate = 65535.0 / 37889.0;        
+        const float transmitionRate = 65535.0 / 37889.0;
         uint16_t ambient_light = 0;
         uint16_t red_light = 0;
         uint16_t green_light = 0;

@@ -1,4 +1,5 @@
 #include <CustomGyro.h>
+<<<<<<< HEAD
 
 CustomGyro::CustomGyro()
 {
@@ -70,3 +71,37 @@ void CustomGyro::ResetPitchAndRoll()
     _pitchError = pitchSum / count;
     _rollError = rollSum / count;
 }
+=======
+#include <Wire.h>
+
+CustomGyro::CustomGyro()
+{
+    Wire.begin();
+    Wire.beginTransmission(SensorAdress);
+    Wire.write(0x6B);
+    Wire.write(0);
+    Wire.endTransmission(true);
+}
+
+void CustomGyro::GetGyro()
+{}
+
+void CustomGyro::GetAccelerometer()
+{}
+
+void CustomGyro::Measure()
+{
+    Wire.beginTransmission(MPU);
+    Wire.write(0x3B);  
+    Wire.endTransmission(false);
+    Wire.requestFrom(SensorAdress,14,true);
+    AcX=Wire.read()<<8|Wire.read();
+    AcY=Wire.read()<<8|Wire.read();
+    AcZ=Wire.read()<<8|Wire.read();
+    Wire.read();//skip temperature
+    Wire.read();//skip temperature
+    GyX=Wire.read()<<8|Wire.read();
+    GyY=Wire.read()<<8|Wire.read();
+    GyZ=Wire.read()<<8|Wire.read();
+}
+>>>>>>> CustomGyro library start

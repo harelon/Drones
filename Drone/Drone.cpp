@@ -68,6 +68,27 @@ void Drone::SendHeight()
     SendMessage(&response.header);
 }
 
+Drone* Drone::SetUpLeds(int FrontRightPort, int FrontLeftPort, int BackRightPort, int BackLeftPort)
+{
+    LedPorts[FrontRight] = FrontRightPort;
+    LedPorts[FrontLeft] = FrontLeftPort;
+    LedPorts[BackRight] = BackRightPort;
+    LedPorts[BackLeft] = BackLeftPort;
+    for (int i = 0; i < NumberOfWings; i++)
+    {
+        WingsLeds[i]= Adafruit_NeoPixel(NumberOfLedsOnWing,LedPorts[i],NEO_GRB+ NEO_KHZ800);
+        WingsLeds[i].begin();
+    }
+    return this;
+}
+void Drone::TurnLedsOff()
+{
+    for (int i = 0; i < NumberOfWings; i++)
+    {        
+        WingsLeds[i].fill(BLACK, StartLed, NumberOfLedsOnWing);
+        WingsLeds[i].show();
+    }
+}
 void Drone::TurnBuzzerOff()
 {
     digitalWrite(_buzzerId, LOW);

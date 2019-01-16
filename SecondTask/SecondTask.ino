@@ -31,25 +31,25 @@ typedef enum {
 } MainColors;
 MainColors sensedColor;
 
-
-
 void setup()
 {
   LightSensor.init();
   LightSensor.enableLightSensor(false);
   for (int i = 0; i < NumberOfWings; i++)
   {
-    WingsLeds[i].updateType(NEO_GRB + NEO_KHZ800);
-    WingsLeds[i].updateLength(NumberOfLedsOnWing);
-    WingsLeds[i].setPin(LedPorts[i]);
-    WingsLeds[i].begin();
-  }  
+    WingsLeds[i]= Adafruit_NeoPixel(NumberOfLedsOnWing,LedPorts[i],NEO_GRB+ NEO_KHZ800);
+    WingsLeds[i].begin();    
+  }
+  Serial.begin(9600);
 }
 void loop()
 {
-  LightSensor.readRedLight(red_light);
-  LightSensor.readGreenLight(green_light);
-  LightSensor.readBlueLight(blue_light);
+  if(!LightSensor.readRedLight(red_light)||
+  !LightSensor.readGreenLight(green_light)||
+  !LightSensor.readBlueLight(blue_light))
+  {
+    return;
+  }
   red_light = red_light * TransmitionRate;
   green_light = green_light * TransmitionRate;
   blue_light = blue_light * TransmitionRate;
@@ -130,11 +130,11 @@ MainColors detectMainColor(uint16_t r, uint16_t g, uint16_t b)
   {
     return NONE;
   }
-  if (d / Cmax < 0.6)
+  if (d / Cmax < 0.4)
   {
     return WHITE;
   }
-  if (h < 130 && h > 90)
+  if (h < 180 && h > 90)
   {
     return GREEN;
   }

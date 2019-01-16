@@ -3,8 +3,18 @@
 
 #include <SparkFun_APDS9960.h>
 #include <HDC1080JS.h>
+#include "Adafruit_NeoPixel.h"
 
 #include <Comms.h>
+
+#define NumberOfWings 4
+#define NumberOfLedsOnWing 4
+#define FrontRight 0
+#define FrontLeft 1
+#define BackRight 2
+#define BackLeft 3
+#define StartLed 0
+#define BLACK Adafruit_NeoPixel::Color(0,0,0)
 
 class Drone: public Comms
 {   
@@ -18,6 +28,8 @@ class Drone: public Comms
         uint16_t green_light = 0;
         uint16_t blue_light = 0;
         int _buzzerId;
+        int LedPorts[NumberOfWings];
+        Adafruit_NeoPixel WingsLeds[NumberOfWings];
     protected:
         void virtual OnColorRequest();
         void virtual OnTemperatureRequest();
@@ -36,5 +48,7 @@ class Drone: public Comms
         Drone* SetUpColorSensor();
         Drone* SetUpHeightSensor();
         Drone* SetUpBuzzer(int buzzerId);
+        Drone* SetUpLeds(int FrontRightPort, int FrontLeftPort, int BackRightPort, int BackLeftPort);
+        void TurnLedsOff();
 };
 #endif

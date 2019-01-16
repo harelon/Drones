@@ -40,11 +40,8 @@ class Drone: public Comms
         void SendTemperature();
         void SendColor();
         void SendHeight();
-<<<<<<< HEAD
         void TurnBuzzerOn();
         void TurnBuzzerOff();
-=======
->>>>>>> fixed recieve message not reseting pRecieve on finish recieving
         void DispatchMessage(MessageHeader* message) override;
     public:
         Drone(uint8_t rx, uint8_t tx);

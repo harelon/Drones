@@ -1,10 +1,9 @@
 #include "Drone.h"
-Drone drone(6, 9);
+Drone drone(12, 11);
 Drone* droneRef = &drone;
 void setup() {
-  droneRef->SetUpTempSensor()->SetUpColorSensor()->SetUpBuzzer(13);  
+  droneRef->SetUpTempSensor()->SetUpColorSensor()->SetUpHeightSensor(9,10);
 }
-
 void loop() {
-  drone.PollMessage();
+  drone.PollMessage();  
 }

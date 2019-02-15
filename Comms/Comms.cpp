@@ -27,7 +27,7 @@ bool Comms::ReceiveMessage(MessageHeader* message)
             pRecieve = (byte*)message;
             *pRecieve = _serial.read();
             gotLength = true;
-            endRecieve = pRecieve + (message->length);
+            endRecieve = pRecieve + (message->length);            
             pRecieve++;
         }
         else

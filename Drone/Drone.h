@@ -20,7 +20,8 @@ class Drone: public Comms
 {   
     private:
         HDC1080JS _TempSensor;
-        //HeightSensor;
+        int _echo;
+        int _trig;
         SparkFun_APDS9960 _LightSensor;
         const float transmitionRate = 65535.0 / 37889.0;
         uint16_t ambient_light = 0;
@@ -46,7 +47,7 @@ class Drone: public Comms
         Drone(uint8_t rx, uint8_t tx);
         Drone* SetUpTempSensor();
         Drone* SetUpColorSensor();
-        Drone* SetUpHeightSensor();
+        Drone* SetUpHeightSensor(int echo, int trig);
         Drone* SetUpBuzzer(int buzzerId);
         Drone* SetUpLeds(int FrontRightPort, int FrontLeftPort, int BackRightPort, int BackLeftPort);
         void TurnLedsOff();

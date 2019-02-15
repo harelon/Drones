@@ -51,20 +51,28 @@ void Drone::SendColor()
     SendMessage(&response.header);
 }
 
-Drone* Drone::SetUpHeightSensor()
+Drone* Drone::SetUpHeightSensor(int echo, int trig)
 {
+    _trig = trig;
+    _echo = echo;
+    pinMode(_trig, OUTPUT);
+    pinMode(_echo, INPUT);
     return this;
 }
 
 void Drone::SendHeight()
 {
     HeightResponse response;
-
+   
     response.header.length = sizeof(HeightResponse);
     response.header.type = RESPONSE_FOR_HEIGHT;
-    
-   //response.height=;
 
+    digitalWrite(_trig, LOW);
+    delayMicroseconds(2);
+    digitalWrite(_trig, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(_trig, LOW);
+    response.height = pulseIn(_echo, HIGH) / 2 / 28;
     SendMessage(&response.header);
 }
 

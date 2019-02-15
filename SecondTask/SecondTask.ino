@@ -27,7 +27,7 @@ typedef enum {
   RED,
   GREEN,
   BLUE,
-  WHITE,
+  WHITE,  
 } MainColors;
 MainColors sensedColor;
 
@@ -35,6 +35,7 @@ void setup()
 {
   LightSensor.init();
   LightSensor.enableLightSensor(false);
+  //initialize light sensor and enable it
   for (int i = 0; i < NumberOfWings; i++)
   {
     WingsLeds[i]= Adafruit_NeoPixel(NumberOfLedsOnWing,LedPorts[i],NEO_GRB+ NEO_KHZ800);
@@ -53,7 +54,9 @@ void loop()
   red_light = red_light * TransmitionRate;
   green_light = green_light * TransmitionRate;
   blue_light = blue_light * TransmitionRate;
+  // reads colors from the light sensor
   sensedColor = detectMainColor(red_light, green_light, blue_light);
+  // call which determine what color the light that is read
   Serial.println(sensedColor);
   if (sensedColor == WHITE)
   {
@@ -77,22 +80,26 @@ void loop()
   }
   for (int i = 0; i < NumberOfWings; i++)
   {
+    //if the light read isn't what the wing is supposed to show turn off her light
     if (&WingsLeds[i] != Wing)
     {
       WingsLeds[i].fill(BLACK, StartLed, NumberOfLedsOnWing);
       WingsLeds[i].show();
     }
   }
+  // if the color sensed match any color then Wing will be equal to something and it will turn on her light
   if (Wing != nullptr)
   {
     Wing->fill(PixelColor, StartLed, NumberOfLedsOnWing);
     Wing->show();
   }
+  // reset wing because next time you need to call the function and have a different wing
   Wing = nullptr;
 }
 
 MainColors detectMainColor(uint16_t r, uint16_t g, uint16_t b)
 {
+  //transform color to hsv beacuse it is easier to determine which color it is
   float Rtag = r / 255.0;
   float Gtag = g / 255.0;
   float Btag = b / 255.0;
@@ -126,28 +133,33 @@ MainColors detectMainColor(uint16_t r, uint16_t g, uint16_t b)
   Serial.println(d / Cmax);
   Serial.print("V:");
   Serial.println(Cmax);
+  // if the color has low light return none which means low light
   if (Cmax < 0.4)
   {
     return NONE;
   }
+  // if the color has low saturation it is white then return white
   if (d / Cmax < 0.4)
   {
     return WHITE;
   }
+  // the hue range for green in hsv
   if (h < 180 && h > 90)
   {
     return GREEN;
   }
+  // the hue range for blue in hsv
   else if (h < 255 && h > 200)
   {
     return BLUE;
   }
+  // the hue range for red in hsv
   else if ((h > 345 && h < 360) || ( h < 11 && h > 0))
   {
     return RED;
-  }
+  }  
 }
-
+// needed for hsv conversion
 float Max(float a, float b)
 {
   if (a > b)
@@ -156,7 +168,7 @@ float Max(float a, float b)
   }
   return b;
 }
-
+// needed for hsv conversion
 float Min(float a, float b)
 {
   if (a < b)

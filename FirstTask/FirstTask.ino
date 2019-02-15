@@ -21,9 +21,12 @@ void setup()
   pinMode(TrigPort, OUTPUT);
   for (int i = 0; i < NumberOfWings; i++)
   {
-    WingsLeds[i] = Adafruit_NeoPixel(NumberOfLedsOnWing, LedPorts[i], NEO_GRB + NEO_KHZ800);
+    
+    
+    
+       ing, LedPorts[i], NEO_GRB + NEO_KHZ800);
     WingsLeds[i].begin();
-  }
+  }   
   Serial.begin(9600);
 }
 
@@ -31,6 +34,7 @@ void loop()
 {
   int distance = ReadDist();
   Serial.println(distance);
+  // determine the distance to know which led and what color to light up
   if (distance > 3 * meters)
   {
     PixelColor = Adafruit_NeoPixel::Color(255, 84, 0);
@@ -62,6 +66,7 @@ void loop()
 
 int ReadDist()
 {
+  // reads distance like the ultrasonic library does
   digitalWrite(TrigPort, LOW);
   delayMicroseconds(2);
   digitalWrite(TrigPort, HIGH);

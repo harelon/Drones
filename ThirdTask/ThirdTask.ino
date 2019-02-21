@@ -21,18 +21,26 @@ void setup()
   Gyro.initialize();
   resetPitchAndRoll();
   customLed.begin();
-  Serial.println("setup succeeded");
+  customLed.TurnOffLed();
+  Serial.println("setup succeeded");  
 }
 void loop()
 {  
   Gyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-  customLed.TurnOffLed();
+  
   wingNum = GetOrientedWing(changeValue);
   Serial.print("wingNum = ");
   Serial.println(wingNum);
   customLed.SetWing(LED_BLUE, (byte)wingNum);
-  // clear leds
-  delay(500);
+  if(wingNum != 0)
+  {
+    delay(1000);
+  }
+  else
+  {
+    delay(20);
+  }
+  customLed.TurnOffLed();
 }
 
 

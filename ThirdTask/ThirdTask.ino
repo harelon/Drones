@@ -13,7 +13,7 @@ CustomLed customLed(7);
 int wingNum;
 long pitchError;
 long rollError;
-int changeValue = 5;
+int changeValue = 30;
 void setup()
 {
   Serial.begin(9600);  

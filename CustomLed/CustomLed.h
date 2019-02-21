@@ -30,6 +30,8 @@ class CustomLed
         bool SetLed(uint32_t color, byte wing, byte led);
         bool SetWing(byte redValue, byte greenValue, byte blueValue, byte wing);
         bool SetWing(uint32_t color, byte wing);
+        bool SetAll(byte redValue, byte greenValue, byte blueValue);
+        bool SetAll(uint32_t color);
         void TurnOffLed();
 };
 

@@ -122,6 +122,20 @@ bool CustomLed::SetWing(uint32_t color, byte wing)
     return true;
 }
 
+bool CustomLed::SetAll(byte redValue, byte greenValue, byte blueValue)
+{
+    strip.fill(Adafruit_NeoPixel::Color(redValue,greenValue,blueValue),0,NUMBER_OF_LEDS);
+    strip.show();
+    return true;
+}
+
+bool CustomLed::SetAll(uint32_t color)
+{
+    strip.fill(color,0,NUMBER_OF_LEDS);
+    strip.show();
+    return true;
+}
+
 void CustomLed::TurnOffLed()
 {
     strip.clear();

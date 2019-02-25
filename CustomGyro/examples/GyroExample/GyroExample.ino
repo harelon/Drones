@@ -1,9 +1,10 @@
 #include <CustomGyro.h>
-
+#include <Wire.h>
 CustomGyro gyro;
 void setup()
 {
     Serial.begin(9600);
+    Wire.begin();
     gyro.begin();
 }
 

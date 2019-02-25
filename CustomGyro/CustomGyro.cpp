@@ -7,10 +7,6 @@ CustomGyro::CustomGyro()
 
 void CustomGyro::begin()
 {
-    if (TWCR == 0)
-    {
-        Wire.begin();   
-    }  
     _Gyro.initialize();
     ResetPitchAndRoll();
 }

@@ -1,5 +1,4 @@
 #include <MPU6050.h>
-#include <Wire.h>
 #include <math.h>
 
 #define GyroScale 131

@@ -112,7 +112,6 @@ void Drone::TurnBuzzerOn()
     BuzzResponse response;
     response.header.length = sizeof(BuzzResponse);
     response.header.type = RESPONSE_BUZZ_ON;
-
     SendMessage(&response.header);
 }
 Drone* Drone::SetUpBuzzer(int buzzerId)
@@ -142,6 +141,7 @@ void Drone::DispatchMessage(MessageHeader* message)
             break;
     }
     Serial.println("called dispatch message");
+    }
 }
 
 void Drone::OnTemperatureRequest()

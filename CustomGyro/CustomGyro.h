@@ -1,5 +1,9 @@
+#ifndef CustomGyro_h
+#define CustomGyro_h
+
 #include <MPU6050.h>
 #include <math.h>
+
 
 #define GyroScale 131
 class CustomGyro
@@ -22,3 +26,4 @@ class CustomGyro
         float GetYaw();
         void ResetPitchAndRoll();
 };
+#endif

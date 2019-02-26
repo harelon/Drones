@@ -12,8 +12,8 @@ class CustomGyro
         int16_t gx;
         int16_t gy;
         int16_t gz;
-        long _pitchError;
-        long _rollError;
+        float _pitchError;
+        float _rollError;
     public:
         CustomGyro();
         void begin();

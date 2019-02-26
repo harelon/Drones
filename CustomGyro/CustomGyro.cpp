@@ -25,9 +25,8 @@ float CustomGyro::GetPitch()
     long aySquared = ay;
     aySquared = aySquared * ay;
     long az_ay = azSquared + aySquared;
-    return RAD_TO_DEG * atan(ax / sqrt(az_ay)) - _pitchError;
+    return (RAD_TO_DEG * atan(ax / sqrt(az_ay))) - _pitchError;    
 }
-
 
 float CustomGyro::GetRoll()
 {
@@ -36,8 +35,8 @@ float CustomGyro::GetRoll()
     azSquared = azSquared * az;
     long axSquared = ax;
     axSquared = axSquared * ax;
-    long az_ax = azSquared + axSquared;
-    return RAD_TO_DEG * atan(ay / sqrt(az_ax)) - _rollError;
+    long az_ax = azSquared + axSquared;    
+    return (RAD_TO_DEG * atan(ay / sqrt(az_ax))) - _rollError;
 }
 
 
@@ -60,13 +59,13 @@ void CustomGyro::ResetPitchAndRoll()
         aySquared = ay;
         aySquared = aySquared * ay;
         az_ay = azSquared + aySquared;
-        pitchSum += RAD_TO_DEG * atan(ax / sqrt(az_ay));
-        az_ax = azSquared + axSquared;
+        pitchSum += RAD_TO_DEG * atan(ax / sqrt(az_ay));        
         axSquared = ax;
         axSquared = axSquared * ax;
+        az_ax = azSquared + axSquared;
         rollSum += RAD_TO_DEG * atan(ay / sqrt(az_ax));
         count += 1;
     }
-    _pitchError = pitchSum / count;
-    _rollError = rollSum / count;
+    _pitchError = ((float)pitchSum / count);    
+    _rollError = ((float)rollSum / count);    
 }

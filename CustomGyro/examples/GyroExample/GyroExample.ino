@@ -5,7 +5,7 @@ void setup()
 {
     Serial.begin(9600);
     Wire.begin();
-    gyro.begin();
+    gyro.begin();    
 }
 
 void loop()

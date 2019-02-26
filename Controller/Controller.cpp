@@ -73,5 +73,5 @@ void Controller::DispatchMessage(MessageHeader* message)
         case RESPONSE_BUZZ_OFF:
             this->OnBuzzResponse((BuzzResponse*)message);
             break;
-    }   
+    }
 }

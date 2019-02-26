@@ -6,7 +6,7 @@
 class Controller : public Comms
 {
     protected:
-        void DispatchMessage(MessageHeader* message);
+        void virtual DispatchMessage(MessageHeader* message);
         void RequestForTemperature();
         void RequestForColor();
         void RequestForHeight();

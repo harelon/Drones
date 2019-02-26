@@ -39,6 +39,8 @@ enum MessageTypes
     RESPONSE_BUZZ_ON = 8,
     REQUEST_BUZZ_OFF = 9,
     RESPONSE_BUZZ_OFF = 10,
+    REQUEST_ANGULAR_ORIENTATION = 11,
+    RESPONSE_ANGULAR_ORIENTATION = 12,
 };
 
 typedef struct {
@@ -46,6 +48,12 @@ typedef struct {
   uint16_t g;
   uint16_t b;
 } rgbColor;
+
+typedef struct{
+   float pitch;
+   float roll;
+   float yaw;
+} AngularOrientation;
 
 typedef struct{
    MessageHeader header; 
@@ -62,6 +70,10 @@ typedef struct{
 typedef struct{
    MessageHeader header;   
 }BuzzRequest;
+
+typedef struct{
+   MessageHeader header;   
+}GyroRequest;
 
 typedef struct{
    MessageHeader header;    
@@ -81,5 +93,10 @@ typedef struct{
 typedef struct{
    MessageHeader header;
 }BuzzResponse;
+
+typedef struct{
+   MessageHeader header;
+   AngularOrientation angularOrientation;
+}GyroResponse;
 
 #endif

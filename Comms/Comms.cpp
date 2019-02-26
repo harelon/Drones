@@ -12,8 +12,7 @@ void Comms::SendMessage(MessageHeader* message)
     byte *end = p + message->length;
     while(p < end)
     {
-        _serial.write(*p);
-        Serial.println(*p);
+        _serial.write(*p);        
         p++;
     }
 }

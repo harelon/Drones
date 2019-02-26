@@ -24,14 +24,14 @@ class CustomLed
         void begin();
         bool SetLeds(byte redValue, byte greenValue, byte blueValue, byte startWing, byte startLed, byte stopWing, byte stopLed);
         bool SetLeds(uint32_t color, byte startWing, byte startLed, byte stopWing, byte stopLed);
-        bool SetLeds(byte redValue, byte greenValue, byte blueValue, byte startWing, byte startLed, byte NunmberOfLeds);
-        bool SetLeds(uint32_t color, byte startWing, byte startLed, byte NunmberOfLeds);
+        bool SetLeds(byte redValue, byte greenValue, byte blueValue, byte startWing, byte startLed, byte numberOfLeds);
+        bool SetLeds(uint32_t color, byte startWing, byte startLed, byte numberOfLeds);
         bool SetLed(byte redValue, byte greenValue, byte blueValue, byte wing, byte led);
         bool SetLed(uint32_t color, byte wing, byte led);
         bool SetWing(byte redValue, byte greenValue, byte blueValue, byte wing);
         bool SetWing(uint32_t color, byte wing);
-        bool SetAll(byte redValue, byte greenValue, byte blueValue);
-        bool SetAll(uint32_t color);
+        bool SetRing(byte redValue, byte greenValue, byte blueValue, byte radius);
+        bool SetRing(uint32_t color, byte radius);
         void TurnOffLed();
 };
 

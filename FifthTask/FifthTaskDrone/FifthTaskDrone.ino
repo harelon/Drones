@@ -1,5 +1,6 @@
 #include <SoftwareSerial.h>
 #define echoPin 13
+// a library we made to usu adafruit neopixel easier to use
 #include <CustomLed.h>
 
 SoftwareSerial softSerial(6, 5);
@@ -30,9 +31,13 @@ void loop()
     radius = 0;
     return;
   }
+  // get the most significant byte of the distance
   byte hd = distance >> 8;
+  // get the least significant byte of the distance
   byte ld = distance & 0xFF;
+  // send the most significant byte of the distance
   softSerial.write(hd);
+  // send the least significant byte of the distance
   softSerial.write(ld);
   if (distance > 300)
   {
@@ -54,13 +59,18 @@ void loop()
   {
     color = Adafruit_NeoPixel::Color(255, 0, 0);
     radius = 1;
-  }  
+  }
+  // no need to turn off the leds if the next ring radius is bigger because it will
+  // override the leds that were lit on the the last radius
+  // if the current radius is smaller we need to turn off the leds so we won't have
+  // leftovers from the last ring that was lit
   if (radius < lastRadius)
   {
-    cl.TurnOffLed();    
+    cl.TurnOffLed();
   }
   if (radius != lastRadius)
   {
+    // if the color needs changing then set the rings that color
     cl.SetRing(color, radius);
   }
   lastRadius = radius;
@@ -69,5 +79,6 @@ void loop()
 
 int readDist()
 {
+  // reads distance
   return pulseIn(echoPin, HIGH) / 58;
 }

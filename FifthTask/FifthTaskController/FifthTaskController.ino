@@ -7,6 +7,7 @@
 SoftwareSerial mySerial(5, 6);
 
 void setup() {
+  // init serial communication and screen
   mySerial.begin(9600);  
   lcd.begin();
   lcdtouch.begin();
@@ -19,8 +20,13 @@ void setup() {
 }
 
 void loop() {
+  // the distance is sent in 2 bytes and we don't want to read only one
+  // so we wait until there are 2 bytes waiting to be sent
   if (mySerial.available() >= 2)
   {
+    // read the most significant byte that was sent into an int and shift it 8 positions to the left
+    // so it would be the most signifcant byte in the int
+    // also read the least significant byte into the position of the least significant byte in the int
     int x = (mySerial.read() << 8) | (mySerial.read());    
     lcd.print(x);
     delay(500);

@@ -17,9 +17,14 @@ void CustomLed::begin()
             clock_prescale_set(clock_div_1)
     #endif
     strip.updateType(NEO_GRB + NEO_KHZ800);
-    strip.updateLength(16);
+    strip.updateLength(NUMBER_OF_LEDS);
     strip.setPin(_pin);
     strip.begin();
+}
+
+void CustomLed::SetPin(byte pin)
+{
+    _pin = pin;
 }
 
 bool CustomLed::SetLeds(byte redValue, byte greenValue, byte blueValue, byte startWing, byte startLed, byte stopWing, byte stopLed)
@@ -109,6 +114,17 @@ bool CustomLed::SetRing(uint32_t color, byte radius)
     }
     strip.show();
     return true;
+}
+
+void CustomLed::SetAll(byte redValue, byte greenValue, byte blueValue, byte radius)
+{
+    SetAll(Adafruit_NeoPixel::Color(redValue, greenValue, blueValue));
+}
+
+void CustomLed::SetAll(uint32_t color)
+{
+    strip.fill(color, 0, NUMBER_OF_LEDS);
+    strip.show();
 }
 
 void CustomLed::TurnOffLed()

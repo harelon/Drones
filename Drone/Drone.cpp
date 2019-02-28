@@ -1,7 +1,7 @@
 #include <Drone.h>
 Drone::Drone(uint8_t rx,uint8_t tx):Comms(rx,tx)
-{
-
+{        
+    Wire.begin();    
 }
 
 Drone* Drone::SetUpTempSensor()
@@ -37,18 +37,28 @@ void Drone::SendColor()
 
     response.header.length = sizeof(ColorResponse);
     response.header.type = RESPONSE_FOR_COLOR;
-    if( 
-       !_LightSensor.readRedLight(red_light) ||
-       !_LightSensor.readGreenLight(green_light) ||
-       !_LightSensor.readBlueLight(blue_light)){
-        return;
-    }
 
     response.color.r = red_light*transmitionRate;
     response.color.g = green_light*transmitionRate;
     response.color.b = blue_light*transmitionRate;
 
     SendMessage(&response.header);
+}
+
+void Drone::ReadColor()
+{
+    if( 
+       !_LightSensor.readRedLight(red_light) ||
+       !_LightSensor.readGreenLight(green_light) ||
+       !_LightSensor.readBlueLight(blue_light)){ 
+        red_light = 0;
+        green_light = 0;
+        blue_light = 0;
+        return;     
+       }
+    red_light = red_light * transmitionRate;
+    green_light = green_light * transmitionRate;
+    blue_light = blue_light * transmitionRate;
 }
 
 Drone* Drone::SetUpHeightSensor(int echo, int trig)
@@ -76,36 +86,15 @@ void Drone::SendHeight()
     SendMessage(&response.header);
 }
 
-Drone* Drone::SetUpLeds(int FrontRightPort, int FrontLeftPort, int BackRightPort, int BackLeftPort)
-{
-    LedPorts[FrontRight] = FrontRightPort;
-    LedPorts[FrontLeft] = FrontLeftPort;
-    LedPorts[BackRight] = BackRightPort;
-    LedPorts[BackLeft] = BackLeftPort;
-    for (int i = 0; i < NumberOfWings; i++)
-    {
-        WingsLeds[i]= Adafruit_NeoPixel(NumberOfLedsOnWing,LedPorts[i],NEO_GRB+ NEO_KHZ800);
-        WingsLeds[i].begin();
-    }
-    return this;
-}
-void Drone::TurnLedsOff()
-{
-    for (int i = 0; i < NumberOfWings; i++)
-    {        
-        WingsLeds[i].fill(BLACK, StartLed, NumberOfLedsOnWing);
-        WingsLeds[i].show();
-    }
-}
 void Drone::TurnBuzzerOff()
 {
     digitalWrite(_buzzerId, LOW);
     BuzzResponse response;
     response.header.length = sizeof(BuzzResponse);
     response.header.type = RESPONSE_BUZZ_OFF;
-
     SendMessage(&response.header);
 }
+
 void Drone::TurnBuzzerOn()
 {
     digitalWrite(_buzzerId, HIGH);
@@ -114,12 +103,37 @@ void Drone::TurnBuzzerOn()
     response.header.type = RESPONSE_BUZZ_ON;
     SendMessage(&response.header);
 }
+
 Drone* Drone::SetUpBuzzer(int buzzerId)
 {
     _buzzerId = buzzerId;
     pinMode(_buzzerId, OUTPUT);
     return this;
 }
+
+void Drone::SendAngularOrientation()
+{
+    GyroResponse response;
+    response.header.length = sizeof(GyroResponse);
+    response.header.type = RESPONSE_ANGULAR_ORIENTATION;
+    response.angularOrientation.pitch = _Gyro.GetPitch();
+    response.angularOrientation.roll = _Gyro.GetRoll();
+    response.angularOrientation.yaw = _Gyro.GetYaw();
+    SendMessage(&response.header);
+}
+
+Drone* Drone::SetUpGyro()
+{
+    _Gyro.begin();
+    return this;
+}
+
+Drone* Drone::SetUpLeds(byte pin)
+{    
+    cl.SetPin(pin);
+    return this;
+}
+
 void Drone::DispatchMessage(MessageHeader* message)
 {
     switch (message->type)
@@ -139,8 +153,9 @@ void Drone::DispatchMessage(MessageHeader* message)
         case REQUEST_BUZZ_OFF:
             OnBuzzerOffRequest();
             break;
-    }
-    Serial.println("called dispatch message");
+        case REQUEST_ANGULAR_ORIENTATION:
+            OnAngularOrientationRequest();
+            break;
     }
 }
 
@@ -151,6 +166,9 @@ void Drone::OnTemperatureRequest()
 
 void Drone::OnColorRequest()
 {
+    ReadColor();
+    _sensedColor = Utils::RGB2MainColor(red_light, green_light, blue_light);
+    _cl.SetAll(_sensedColor);
     SendColor();
 }
 
@@ -167,4 +185,9 @@ void Drone::OnBuzzerOnRequest()
 void Drone::OnBuzzerOffRequest()
 {
     TurnBuzzerOff();
+}
+
+void Drone::OnAngularOrientationRequest()
+{    
+    SendAngularOrientation();
 }

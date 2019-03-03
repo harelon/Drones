@@ -24,6 +24,16 @@ void Controller::RequestForColor()
     SendMessage(&request.header);
 }
 
+void Controller::RequestRawColor()
+{
+    RawColorRequest request;
+
+    request.header.length = sizeof(RawColorRequest);
+    request.header.type = REQUEST_RAW_COLOR;
+
+    SendMessage(&request.header);
+}
+
 void Controller::RequestForHeight()
 {
     HeightRequest request;
@@ -63,6 +73,9 @@ void Controller::DispatchMessage(MessageHeader* message)
             break;
         case RESPONSE_FOR_COLOR:
             this->OnColorResponse((ColorResponse*)message);
+            break;
+         case RESPONSE_RAW_COLOR:
+            this->OnRawColorResponse((ColorResponse*)message);
             break;
         case RESPONSE_FOR_HEIGHT:
             this->OnHeightResponse((HeightResponse*)message);

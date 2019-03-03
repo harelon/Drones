@@ -1,6 +1,6 @@
 #include <CustomLed.h>
 
-CustomLed::CustomLed(int pin)
+CustomLed::CustomLed(byte pin)
 {
     _pin = pin;
 }
@@ -116,7 +116,7 @@ bool CustomLed::SetRing(uint32_t color, byte radius)
     return true;
 }
 
-void CustomLed::SetAll(byte redValue, byte greenValue, byte blueValue, byte radius)
+void CustomLed::SetAll(byte redValue, byte greenValue, byte blueValue)
 {
     SetAll(Adafruit_NeoPixel::Color(redValue, greenValue, blueValue));
 }

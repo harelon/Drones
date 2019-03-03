@@ -6,6 +6,7 @@
 
 enum ButtonIds{
     BUTTON_INVALID,
+    BUTTON_RAW_COLOR,
     BUTTON_COLOR,
     BUTTON_TEMP,
     BUTTON_HEIGHT,

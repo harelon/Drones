@@ -75,7 +75,7 @@ void Controller::DispatchMessage(MessageHeader* message)
             this->OnColorResponse((ColorResponse*)message);
             break;
          case RESPONSE_RAW_COLOR:
-            this->OnRawColorResponse((ColorResponse*)message);
+            this->OnRawColorResponse((RawColorResponse*)message);
             break;
         case RESPONSE_FOR_HEIGHT:
             this->OnHeightResponse((HeightResponse*)message);

@@ -20,16 +20,17 @@ class ScreenCustom : public Controller
         Panel _resultPanel;
     protected:
         void OnTemperatureResponse(TemperatureResponse* message) override;
+        void OnRawColorResponse(RawColorResponse* message) override;
         void OnColorResponse(ColorResponse* message) override;
         void OnHeightResponse(HeightResponse* message) override;
-        void OnBuzzResponse(BuzzResponse* message) override;        
+        void OnBuzzResponse(BuzzResponse* message) override;
         void MainScreen();        
         void Mainloop();
         void BuzzOnReq();
         void BuzzOffReq();
         void HeightReq();
         void TemperatureReq();
-        void ColorReq();
+        void RawColorReq();
     public:
         ScreenCustom(uint8_t rx, uint8_t tx);
         void PollScreen();

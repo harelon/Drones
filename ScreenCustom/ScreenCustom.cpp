@@ -8,7 +8,7 @@ ScreenCustom::ScreenCustom(uint8_t rx, uint8_t tx):Controller(rx, tx)
   lcd.setRotation(1);//0,1,2,3
   lcd.setFont(2);
 
-  _buttons[0].Init(BUTTON_COLOR, 20, 20, 70, 40, "Color", WHITE, RED);
+  _buttons[0].Init(BUTTON_RAW_COLOR, 20, 20, 70, 40, "Color", WHITE, RED);
   _buttons[1].Init(BUTTON_TEMP, 20, 80, 70, 40, "Temp", WHITE, RED);
   _buttons[2].Init(BUTTON_HEIGHT, 120, 20, 80, 40, "Height", WHITE, RED);
   _buttons[3].Init(BUTTON_BUZZ_ON, 120, 80, 90, 40, "Buzz on", WHITE, RED);
@@ -25,10 +25,15 @@ void ScreenCustom::OnTemperatureResponse(TemperatureResponse* message)
   _resultPanel.SetText(String(message->temperature));
 }
 
-void ScreenCustom::OnColorResponse(ColorResponse* message)
+void ScreenCustom::OnRawColorResponse(RawColorResponse* message)
 {
   _statusPanel.SetText("Color responded");
   _resultPanel.SetText(String(message->color.r+', ' + message->color.g + ', ' + message->color.b));
+}
+
+void ScreenCustom::OnColorResponse(ColorResponse* message)
+{
+  
 }
 
 void ScreenCustom::OnHeightResponse(HeightResponse* message)
@@ -50,10 +55,10 @@ void ScreenCustom::TemperatureReq()
   _statusPanel.SetText("Waiting for temperature");
 }
 
-void ScreenCustom::ColorReq()
+void ScreenCustom::RawColorReq()
 {
   _statusPanel.SetText("Color pressed");
-  RequestForColor();
+  RequestRawColor();
   _statusPanel.SetText("Waiting for color");
 }
 
@@ -111,7 +116,7 @@ void ScreenCustom::PollScreen()
   
   switch (buttonId)
     {
-      case BUTTON_COLOR:ColorReq(); break;
+      case BUTTON_RAW_COLOR: RawColorReq(); break;
       case BUTTON_TEMP: TemperatureReq(); break;
       case BUTTON_HEIGHT: HeightReq(); break;
       case BUTTON_BUZZ_ON: BuzzOnReq(); break;

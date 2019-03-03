@@ -31,16 +31,27 @@ Drone* Drone::SetUpColorSensor()
     return this;
 }
 
+void Drone::SendRawColor()
+{
+    RawColorResponse response;
+
+    response.header.length = sizeof(RawColorResponse);
+    response.header.type = RESPONSE_RAW_COLOR;
+
+    response.color.r = red_light;
+    response.color.g = green_light;
+    response.color.b = blue_light;
+
+    SendMessage(&response.header);
+}
+
 void Drone::SendColor()
 {
     ColorResponse response;
 
     response.header.length = sizeof(ColorResponse);
     response.header.type = RESPONSE_FOR_COLOR;
-
-    response.color.r = red_light*transmitionRate;
-    response.color.g = green_light*transmitionRate;
-    response.color.b = blue_light*transmitionRate;
+    response.color = _sensedColor;
 
     SendMessage(&response.header);
 }
@@ -61,11 +72,9 @@ void Drone::ReadColor()
     blue_light = blue_light * transmitionRate;
 }
 
-Drone* Drone::SetUpHeightSensor(int echo, int trig)
+Drone* Drone::SetUpHeightSensor(byte echo)
 {
-    _trig = trig;
     _echo = echo;
-    pinMode(_trig, OUTPUT);
     pinMode(_echo, INPUT);
     return this;
 }
@@ -76,12 +85,6 @@ void Drone::SendHeight()
    
     response.header.length = sizeof(HeightResponse);
     response.header.type = RESPONSE_FOR_HEIGHT;
-
-    digitalWrite(_trig, LOW);
-    delayMicroseconds(2);
-    digitalWrite(_trig, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(_trig, LOW);
     response.height = pulseIn(_echo, HIGH) / 2 / 28;
     SendMessage(&response.header);
 }
@@ -104,7 +107,7 @@ void Drone::TurnBuzzerOn()
     SendMessage(&response.header);
 }
 
-Drone* Drone::SetUpBuzzer(int buzzerId)
+Drone* Drone::SetUpBuzzer(byte buzzerId)
 {
     _buzzerId = buzzerId;
     pinMode(_buzzerId, OUTPUT);
@@ -130,7 +133,8 @@ Drone* Drone::SetUpGyro()
 
 Drone* Drone::SetUpLeds(byte pin)
 {    
-    cl.SetPin(pin);
+    _cl.SetPin(pin);
+    _cl.begin();
     return this;
 }
 
@@ -143,6 +147,9 @@ void Drone::DispatchMessage(MessageHeader* message)
             break;
         case REQUEST_FOR_COLOR:
             OnColorRequest();
+            break;
+        case REQUEST_RAW_COLOR:
+            OnRawColorRequest();
             break;
         case REQUEST_FOR_HEIGHT:
             OnHeightRequest();
@@ -190,4 +197,10 @@ void Drone::OnBuzzerOffRequest()
 void Drone::OnAngularOrientationRequest()
 {    
     SendAngularOrientation();
+}
+
+void Drone::OnRawColorRequest()
+{
+    ReadColor();
+    SendRawColor();
 }

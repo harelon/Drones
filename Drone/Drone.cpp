@@ -85,8 +85,13 @@ void Drone::SendHeight()
    
     response.header.length = sizeof(HeightResponse);
     response.header.type = RESPONSE_FOR_HEIGHT;
-    response.height = pulseIn(_echo, HIGH) / 2 / 28;
+    response.height = _height;
     SendMessage(&response.header);
+}
+
+void Drone::SenseHeight()
+{
+    _height = pulseIn(_echo, HIGH) / 2 / 28;
 }
 
 void Drone::TurnBuzzerOff()
@@ -175,12 +180,12 @@ void Drone::OnColorRequest()
 {
     ReadColor();
     _sensedColor = Utils::RGB2MainColor(red_light, green_light, blue_light);
-    _cl.SetAll(_sensedColor);
     SendColor();
 }
 
 void Drone::OnHeightRequest()
 {
+    SenseHeight();
     SendHeight();
 }
 

@@ -23,6 +23,7 @@ class Drone: public Comms
         uint16_t green_light = 0;
         uint16_t blue_light = 0;
         int _buzzerId;
+        int _height = 0;
 
     protected:
         void virtual OnTemperatureRequest();
@@ -42,6 +43,7 @@ class Drone: public Comms
         void SendAngularOrientation();
 
         void ReadColor();
+        void SenseHeight();
         void DispatchMessage(MessageHeader* message) override;
 
     public:

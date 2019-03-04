@@ -33,26 +33,26 @@ MainColors Utils::RGB2MainColor(uint16_t r, uint16_t g, uint16_t b)
     // if the color has low light return none which means low light
     if (Cmax < 0.4)
     {
-        return NONE;
+        return MAIN_NONE;
     }
     // if the color has low saturation it is white then return white
     if (d / Cmax < 0.4)
     {
-        return WHITE;
+        return MAIN_WHITE;
     }
     // the hue range for green in hsv
     if (h < 180 && h > 90)
     {
-        return GREEN;
+        return MAIN_GREEN;
     }
     // the hue range for blue in hsv
     else if (h < 255 && h > 200)
     {
-        return BLUE;
+        return MAIN_BLUE;
     }
     // the hue range for red in hsv
     else if ((h > 345 && h < 360) || ( h < 11 && h > 0))
     {
-        return RED;
+        return MAIN_RED;
     }
 }

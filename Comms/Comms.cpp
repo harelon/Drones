@@ -12,7 +12,7 @@ void Comms::SendMessage(MessageHeader* message)
     byte *end = p + message->length;
     while(p < end)
     {
-        _serial.write(*p);        
+        _serial.write(*p);
         p++;
     }
 }
@@ -26,19 +26,19 @@ bool Comms::ReceiveMessage(MessageHeader* message)
             pRecieve = (byte*)message;
             *pRecieve = _serial.read();
             gotLength = true;
-            endRecieve = pRecieve + (message->length);            
+            endRecieve = pRecieve + (message->length);
             pRecieve++;
         }
         else
         {
-            *pRecieve = _serial.read();            
+            *pRecieve = _serial.read();
             pRecieve++;
         }
     }
     if(pRecieve==endRecieve)
     {        
-        gotLength = false;  
-        pRecieve = (byte*)message;      
+        gotLength = false;
+        pRecieve = (byte*)message;
         return true;
     }
     return false;
@@ -47,7 +47,7 @@ bool Comms::ReceiveMessage(MessageHeader* message)
 void Comms::PollMessage() {
 
     if(ReceiveMessage(pMainMessage))
-    {        
-        this->DispatchMessage(pMainMessage);
-    }    
+    {
+        DispatchMessage(pMainMessage);
+    }
 }

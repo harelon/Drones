@@ -12,7 +12,6 @@ void CustomGyro::begin()
     _Gyro.setThreshold(3);
 }
 
-
 float CustomGyro::GetYaw()
 {
     return _yaw;

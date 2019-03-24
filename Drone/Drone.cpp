@@ -1,12 +1,16 @@
 #include <Drone.h>
 Drone::Drone(uint8_t rx,uint8_t tx):Comms(rx,tx)
-{        
-    Wire.begin();    
+{
+    Wire.begin();
 }
 
 Drone* Drone::SetUpTempSensor()
 {
     _TempSensor.config();
+    if(Serial)
+    {
+        Serial.println("temperature sensor begun");
+    }
     return this;
 }
 
@@ -28,6 +32,10 @@ Drone* Drone::SetUpColorSensor()
     _LightSensor = SparkFun_APDS9960();
     _LightSensor.init();
     _LightSensor.enableLightSensor(false);
+    if(Serial)
+    {
+        Serial.println("color sensor begun");
+    }
     return this;
 }
 
@@ -65,7 +73,7 @@ void Drone::ReadColor()
         red_light = 0;
         green_light = 0;
         blue_light = 0;
-        return;     
+        return;
        }
     red_light = red_light * transmitionRate;
     green_light = green_light * transmitionRate;
@@ -76,6 +84,10 @@ Drone* Drone::SetUpHeightSensor(byte echo)
 {
     _echo = echo;
     pinMode(_echo, INPUT);
+    if(Serial)
+    {
+        Serial.println("height sensor begun");
+    }
     return this;
 }
 
@@ -133,13 +145,21 @@ void Drone::SendAngularOrientation()
 Drone* Drone::SetUpGyro()
 {
     _Gyro.begin();
+    if(Serial)
+    {
+        Serial.println("gyro begun");
+    }
     return this;
 }
 
 Drone* Drone::SetUpLeds(byte pin)
-{    
+{
     _cl.SetPin(pin);
     _cl.begin();
+    if(Serial)
+    {
+        Serial.println("leds begun");
+    }
     return this;
 }
 
@@ -200,7 +220,7 @@ void Drone::OnBuzzerOffRequest()
 }
 
 void Drone::OnAngularOrientationRequest()
-{    
+{
     SendAngularOrientation();
 }
 

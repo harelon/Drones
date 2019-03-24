@@ -5,15 +5,17 @@ void setup()
 {
     Serial.begin(9600);
     Wire.begin();
-    gyro.begin();    
+    gyro.begin();
 }
 
 void loop()
 {
+    gyro.startTime();
     Serial.print("pitch = ");
     Serial.println(gyro.GetPitch());
     Serial.print("roll = ");
     Serial.println(gyro.GetRoll());
-    Serial.print("current yaw = ");
+    Serial.print("current rotation = ");
     Serial.println(gyro.GetYaw());
+    gyro.updateValues();
 }

@@ -24,7 +24,7 @@ class ScreenCustom : public Controller
         void OnColorResponse(ColorResponse* message) override;
         void OnHeightResponse(HeightResponse* message) override;
         void OnBuzzResponse(BuzzResponse* message) override;
-        void MainScreen();        
+        void MainScreen();
         void Mainloop();
         void BuzzOnReq();
         void BuzzOffReq();

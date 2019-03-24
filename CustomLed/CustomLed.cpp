@@ -41,7 +41,7 @@ bool CustomLed::SetLeds(uint32_t color, byte startWing, byte startLed, byte stop
     {
         return false;
     }
-    strip.fill(color, realStartLed, NunmberOfLeds);
+    fill(color, realStartLed, NunmberOfLeds);
     strip.show();
     return true;
 }
@@ -58,7 +58,7 @@ bool CustomLed::SetLeds(uint32_t color, byte startWing, byte startLed, byte numb
     {
         return false;
     }
-    strip.fill(color, realStartLed, numberOfLeds);
+    fill(color, realStartLed, numberOfLeds);
     strip.show();
     return true;
 }
@@ -75,7 +75,7 @@ bool CustomLed::SetLed(uint32_t color, byte wing, byte led)
     {
         return false;
     }
-    strip.fill(color, realLed, 1);
+    fill(color, realLed, 1);
     strip.show();
     return true;
 }
@@ -92,7 +92,7 @@ bool CustomLed::SetWing(uint32_t color, byte wing)
         return false;
     }
     byte startLed = NUMBER_OF_WINGS * (wing - 1);
-    strip.fill(color, startLed, 4);
+    fill(color, startLed, 4);
     strip.show();
     return true;
 }
@@ -110,7 +110,7 @@ bool CustomLed::SetRing(uint32_t color, byte radius)
     }
     for(byte i = 0; i < 4; i++)
     {
-        strip.fill(color, i * 4, radius);
+        fill(color, i * 4, radius);
     }
     strip.show();
     return true;
@@ -123,7 +123,7 @@ void CustomLed::SetAll(byte redValue, byte greenValue, byte blueValue)
 
 void CustomLed::SetAll(uint32_t color)
 {
-    strip.fill(color, 0, NUMBER_OF_LEDS);
+    fill(color, 0, NUMBER_OF_LEDS);
     strip.show();
 }
 
@@ -131,4 +131,26 @@ void CustomLed::TurnOffLed()
 {
     strip.clear();
     strip.show();
+}
+
+void CustomLed::fill(uint32_t c, uint16_t first, uint16_t count) {
+  uint16_t i, end;
+
+  if(first >= NUMBER_OF_LEDS) {
+    return; // If first LED is past end of strip, nothing to do
+  }
+
+  // Calculate the index ONE AFTER the last pixel to fill
+  if(count == 0) {
+    // Fill to end of strip
+    end = NUMBER_OF_LEDS;
+  } else {
+    // Ensure that the loop won't go past the last pixel
+    end = first + count;
+    if(end > NUMBER_OF_LEDS) end = NUMBER_OF_LEDS;
+  }
+
+  for(i = first; i < end; i++) {
+    strip.setPixelColor(i, c);
+  }
 }

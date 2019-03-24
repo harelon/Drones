@@ -12,6 +12,5 @@ void loop()
     cl.TurnOffLed();
     count = (count %  4) + 1;    
     cl.SetRing(255, 255, 255, count);
-//    cl.SetWing(255, 255, 255, count);
     delay(500);
 }

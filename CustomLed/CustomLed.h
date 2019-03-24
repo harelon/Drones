@@ -11,6 +11,8 @@
 #define LED_RED Adafruit_NeoPixel::Color(255,0,0)
 #define LED_GREEN Adafruit_NeoPixel::Color(0,255,0)
 #define LED_BLUE Adafruit_NeoPixel::Color(0,0,255)
+#define LED_WHITE Adafruit_NeoPixel::Color(255, 255, 255)
+#define LED_EMPTY Adafruit_NeoPixel::Color(0, 0, 0)
 #define LED_ORANGE Adafruit_NeoPixel::Color(255,127,0)
 
 class CustomLed
@@ -18,6 +20,7 @@ class CustomLed
     private:
         byte _pin;
         Adafruit_NeoPixel strip;
+        void fill(uint32_t c, uint16_t first, uint16_t count);
     public:
         CustomLed(byte pin);
         CustomLed();

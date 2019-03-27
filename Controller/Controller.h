@@ -13,8 +13,8 @@ class Controller : public Comms
         void RequestForHeight();
         void RequestForBuzzOn();
         void RequestForBuzzOff();
-        // void RequestForGyro();
-        // void RequestForServoDrop(ServoColors color);
+        void RequestForGyro();
+        void RequestForServoDrop(ServoColors color);
 
         void virtual OnTemperatureResponse(TemperatureResponse* message) = 0;
         void virtual OnColorResponse(ColorResponse* message) = 0;

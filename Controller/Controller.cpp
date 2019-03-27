@@ -64,6 +64,27 @@ void Controller::RequestForBuzzOff()
     SendMessage(&request.header);
 }
 
+void Controller::RequestForGyro()
+{
+    GyroRequest request;
+
+    request.header.length = sizeof(GyroRequest);
+    request.header.type = REQUEST_ANGULAR_ORIENTATION;
+
+    SendMessage(&request.header);
+}
+
+void Controller::RequestForServoDrop(ServoColors color)
+{
+    ServoRequest request;
+
+    request.header.length = sizeof(ServoRequest);
+    request.header.type = REQUEST_SERVO_DROP;
+    request.servoColor = color;
+
+    SendMessage(&request.header);
+}
+
 void Controller::DispatchMessage(MessageHeader* message)
 {
     switch (message->type)
@@ -85,6 +106,12 @@ void Controller::DispatchMessage(MessageHeader* message)
             break;
         case RESPONSE_BUZZ_OFF:
             OnBuzzResponse((BuzzResponse*)message);
+            break;
+        case RESPONSE_ANGULAR_ORIENTATION:
+            OnGyroResponse((GyroResponse*) message);
+            break;
+        case RESPONSE_SERVO_DROP:
+            OnServoResponse((ServoResponse*) message);
             break;
     }
 }

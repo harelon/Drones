@@ -18,6 +18,7 @@ class ServoBall
         BallStates Lock();
         BallStates Drop();
         BallStates GetState();
+        void SetState(BallStates state);
 };
 
 #endif

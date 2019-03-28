@@ -7,7 +7,9 @@
 #include <CustomGyro.h>
 #include <Comms.h>
 #include <CustomLed.h>
+#include <ServoBall.h>
 
+#define ServoNumbers 3
 class Drone: public Comms
 {
     private:
@@ -24,6 +26,7 @@ class Drone: public Comms
         uint16_t blue_light = 0;
         int _buzzerId;
         int _height = 0;
+        ServoBall balls[ServoNumbers];
 
     protected:
         void virtual OnTemperatureRequest();
@@ -33,6 +36,7 @@ class Drone: public Comms
         void virtual OnBuzzerOnRequest();
         void virtual OnBuzzerOffRequest();
         void virtual OnAngularOrientationRequest();
+        void virtual OnBallDropRequest(ServoRequest* message);
 
         void SendTemperature();
         void SendColor();
@@ -41,6 +45,8 @@ class Drone: public Comms
         void TurnBuzzerOn();
         void TurnBuzzerOff();
         void SendAngularOrientation();
+        void SendBallDrop(ServoRequest* message);
+        BallStates DropBall(ServoColors color);
 
         void ReadColor();
         void SenseHeight();
@@ -53,6 +59,8 @@ class Drone: public Comms
         Drone* SetUpHeightSensor(byte echo);
         Drone* SetUpBuzzer(byte buzzerId);
         Drone* SetUpGyro();
+        Drone* SetUpServo(byte pin, ServoColors color);
+        Drone* SetUpServo(byte pin, ServoColors color, BallStates state);
         Drone* SetUpLeds(byte pin);
 };
 #endif

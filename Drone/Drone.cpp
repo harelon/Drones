@@ -4,6 +4,35 @@ Drone::Drone(uint8_t rx,uint8_t tx):Comms(rx,tx)
     Wire.begin();
 }
 
+Drone* Drone::SetUpServo(byte pin, ServoColors color)
+{
+   return SetUpServo(pin, color, NEED_TO_LOAD);
+}
+
+Drone* Drone::SetUpServo(byte pin, ServoColors color, BallStates state)
+{
+    balls[color].Init(pin, color, state);
+    return this;
+}
+
+void Drone::SendBallDrop(ServoRequest* message)
+{
+    ServoResponse response;
+
+    response.header.length = sizeof(ServoResponse);
+    response.header.type = RESPONSE_SERVO_DROP;
+    
+    
+    response.state = DropBall(message->servoColor);
+
+    SendMessage(&response.header);
+}
+
+BallStates Drone::DropBall(ServoColors color)
+{
+    return balls[color].Drop();
+}
+
 Drone* Drone::SetUpTempSensor()
 {
     _TempSensor.config();
@@ -188,6 +217,9 @@ void Drone::DispatchMessage(MessageHeader* message)
         case REQUEST_ANGULAR_ORIENTATION:
             OnAngularOrientationRequest();
             break;
+        case REQUEST_SERVO_DROP:
+            OnBallDropRequest((ServoRequest*) message);
+            break;
     }
 }
 
@@ -228,4 +260,9 @@ void Drone::OnRawColorRequest()
 {
     ReadColor();
     SendRawColor();
+}
+
+void Drone::OnBallDropRequest(ServoRequest* message)
+{
+    SendBallDrop(message);
 }

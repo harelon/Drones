@@ -1,47 +1,55 @@
 void ScreenLib::OnRawColorResponse(RawColorResponse* message)
 {
-  String s = "r=" + String(message->color.r) + " g=" + String(message->color.g) + " b=" + String(message->color.b);
-  PrintResult(&lcd, s.c_str());
   PrintStatus(&lcd, "RAW COLOR RESPONDED");
+  PrintResult(&lcd);
+  byte r = message->color.r;
+  byte g = message->color.g;
+  byte b = message->color.b;
+  lcd.print("r=");
+  lcd.print(r);
+  lcd.print(" g=");
+  lcd.print(g);
+  lcd.print(" b=");
+  lcd.print(b);
 }
 void ScreenLib::OnColorResponse(ColorResponse* message)
 {
-  char* res;
-  switch (message->color)
+  PrintStatus(&lcd, "COLOR RESPONDED");
+  PrintResult(&lcd);
+  MainColors c = message->color;
+  switch (c)
   {
     case MAIN_NONE:
-      res = "BLACK";
+      lcd.print("NONE");
       break;
     case MAIN_RED:
-      res = "RED";
+      lcd.print("RED");
       break;
     case MAIN_GREEN:
-      res = "GREEN";
+      lcd.print("GREEN");
       break;
     case MAIN_BLUE:
-      res = "BLUE";
+      lcd.print("BLUE");
       break;
     case MAIN_WHITE:
-      res = "WHITE";
+      lcd.print("WHITE");
       break;
     default:
-      res = "NO COLOR";
+      lcd.print("BLACK");
       break;
   }
-  PrintResult(&lcd, res);
-  PrintStatus(&lcd, "COLOR RESPONDED");
 }
 void ScreenLib::OnHeightResponse(HeightResponse* message)
 {
-  PrintResult(&lcd, message->height);
   PrintStatus(&lcd, "HEIGHT RESPONDED");
+  PrintResult(&lcd);
+  lcd.print(message->height);
 }
 void ScreenLib::OnGyroResponse(GyroResponse* message)
 {
-  //TODO fix the line below;
-  String s = "p=" + String(message->angularOrientation.pitch) + " r=" + String(message->angularOrientation.roll) + " y=" + String(message->angularOrientation.yaw);
-  PrintResult(&lcd, s.c_str());
   PrintStatus(&lcd, "GYRO RESPONDED");
+  String s = "p=" + String((int)message->angularOrientation.pitch) + " r=" + String((int)message->angularOrientation.roll) + " y=" + String((int)message->angularOrientation.yaw);
+  PrintResult(&lcd);
 }
 void ScreenLib::OnServoResponse(ServoResponse* message)
 {

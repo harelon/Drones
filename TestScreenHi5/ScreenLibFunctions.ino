@@ -9,12 +9,12 @@ void ScreenLib::MainScreen()
   lcd.drawRect(0, 225, 240, 45, ILI9341_YELLOW);
   lcd.drawRect(0, 271, 240, 45, ILI9341_GREEN);
   PrintStatus(&lcd, "STATUS PANEL");
-  PrintResult(&lcd, "RESULT PANEL");
+  PrintResult(&lcd);
+  lcd.print("RESULT PANEL");
 }
 
 void ScreenLib::PollScreen()
 {
-
   if (lcdtouch.dataAvailable())
   {
     lcdtouch.read();

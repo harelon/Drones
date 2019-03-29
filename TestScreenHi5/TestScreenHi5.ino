@@ -78,4 +78,5 @@ void setup() {
 
 void loop() {
   screen.PollScreen();
+  screen.PollMessage();
 }

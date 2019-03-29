@@ -1,8 +1,4 @@
 #include <Drone.h>
-Drone::Drone(uint8_t rx,uint8_t tx):Comms(rx,tx)
-{
-    Wire.begin();
-}
 
 Drone* Drone::SetUpServo(byte pin, ServoColors color)
 {

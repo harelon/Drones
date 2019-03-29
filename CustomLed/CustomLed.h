@@ -8,12 +8,14 @@
 #define DEFAULT_PIN 7
 #define NUMBER_OF_LEDS 16
 #define NUMBER_OF_WINGS 4
-#define LED_RED Adafruit_NeoPixel::Color(255,0,0)
-#define LED_GREEN Adafruit_NeoPixel::Color(0,255,0)
-#define LED_BLUE Adafruit_NeoPixel::Color(0,0,255)
-#define LED_WHITE Adafruit_NeoPixel::Color(255, 255, 255)
-#define LED_EMPTY Adafruit_NeoPixel::Color(0, 0, 0)
-#define LED_ORANGE Adafruit_NeoPixel::Color(255,127,0)
+#define LEDS_ON_WING 4
+#define LED_RED 0xFF0000
+#define LED_GREEN 0x00FF00
+#define LED_BLUE 0x0000FF
+#define LED_ORANGE 0xFF7F00
+#define LED_YELLOW 0xFFFF00
+#define LED_PURPLE 0x7F00FF
+#define LED_WHITE 0xFFFFFF
 
 class CustomLed
 {

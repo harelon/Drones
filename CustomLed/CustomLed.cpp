@@ -37,7 +37,7 @@ bool CustomLed::SetLeds(uint32_t color, byte startWing, byte startLed, byte stop
     byte realStartLed = startLed - 1 + NUMBER_OF_WINGS * (startWing - 1);
     byte realStoptLed = stopLed  + NUMBER_OF_WINGS * (stopWing - 1);
     byte NunmberOfLeds = realStoptLed - realStartLed;
-    if(realStartLed >= realStoptLed || realStartLed > 15 || realStartLed < 0 || realStoptLed > 15 || realStoptLed < 0)
+    if(realStartLed >= realStoptLed || realStartLed > (NUMBER_OF_LEDS - 1) || realStartLed < 0 || realStoptLed > (NUMBER_OF_LEDS - 1) || realStoptLed < 0)
     {
         return false;
     }
@@ -54,7 +54,7 @@ bool CustomLed::SetLeds(byte redValue, byte greenValue, byte blueValue, byte sta
 bool CustomLed::SetLeds(uint32_t color, byte startWing, byte startLed, byte numberOfLeds)
 {
     byte realStartLed = startLed - 1 + NUMBER_OF_WINGS * (startWing - 1);
-    if (realStartLed < 0 || realStartLed > 15)
+    if (realStartLed < 0 || realStartLed > (NUMBER_OF_LEDS - 1))
     {
         return false;
     }
@@ -71,7 +71,7 @@ bool CustomLed::SetLed(byte redValue, byte greenValue, byte blueValue, byte wing
 bool CustomLed::SetLed(uint32_t color, byte wing, byte led)
 {
     byte realLed = led - 1 + NUMBER_OF_WINGS * (wing - 1);
-    if (realLed < 0 || realLed > 15) 
+    if (realLed < 0 || realLed > (NUMBER_OF_LEDS - 1)) 
     {
         return false;
     }
@@ -87,7 +87,7 @@ bool CustomLed::SetWing(byte redValue, byte greenValue, byte blueValue, byte win
 
 bool CustomLed::SetWing(uint32_t color, byte wing)
 {
-    if (wing < 1 || wing > 4)
+    if (wing < 1 || wing > NUMBER_OF_WINGS)
     {
         return false;
     }

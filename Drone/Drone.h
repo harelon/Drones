@@ -53,7 +53,11 @@ class Drone: public Comms
         void DispatchMessage(MessageHeader* message) override;
 
     public:
-        Drone(uint8_t rx, uint8_t tx);
+        #ifdef ARDUINO_BOARD
+            Drone(uint8_t rx, uint8_t tx):Comms(rx, tx){}
+        #else
+            Drone():Comms(){}
+        #endif
         Drone* SetUpTempSensor();
         Drone* SetUpColorSensor();
         Drone* SetUpHeightSensor(byte echo);

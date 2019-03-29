@@ -24,6 +24,10 @@ class Controller : public Comms
         void virtual OnGyroResponse(GyroResponse* message) = 0;
         void virtual OnServoResponse(ServoResponse* message) = 0;
     public:
-        Controller(uint8_t rx, uint8_t tx);
+        #ifdef ARDUINO_BOARD
+            Controller(uint8_t rx, uint8_t tx):Comms(rx, tx){}
+        #else
+            Controller():Comms(){}
+        #endif
 };
 #endif

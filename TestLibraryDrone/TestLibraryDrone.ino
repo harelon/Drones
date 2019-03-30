@@ -1,8 +1,9 @@
 #include "Drone.h"
-Drone drone(12, 11);
+Drone drone(5, 4);
 Drone* droneRef = &drone;
 void setup() {
-  droneRef->SetUpHeightSensor(8);
+  Serial.begin(9600);
+  droneRef->SetUpColorSensor()->SetUpHeightSensor(8);
 }
 void loop() {
   drone.PollMessage();  

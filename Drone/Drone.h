@@ -25,7 +25,7 @@ class Drone: public Comms
         uint16_t green_light = 0;
         uint16_t blue_light = 0;
         int _buzzerId;
-        int _height = 0;
+        uint16_t _height = 0;
         ServoBall balls[ServoNumbers];
 
     protected:
@@ -54,9 +54,9 @@ class Drone: public Comms
 
     public:
         #ifdef ARDUINO_BOARD
-            Drone(uint8_t rx, uint8_t tx):Comms(rx, tx){}
+            Drone(uint8_t rx, uint8_t tx):Comms(rx, tx){Wire.begin();}
         #else
-            Drone():Comms(){}
+            Drone():Comms(){Wire.begin();}
         #endif
         Drone* SetUpTempSensor();
         Drone* SetUpColorSensor();

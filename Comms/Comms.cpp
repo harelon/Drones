@@ -6,7 +6,7 @@ void Comms::SendMessage(MessageHeader* message)
     byte *end = p + message->length;
     while(p < end)
     {
-        _serial.write(*p);        
+        _serial.write(*p);
         p++;
     }
 }
@@ -25,7 +25,7 @@ bool Comms::ReceiveMessage(MessageHeader* message)
         }
         else
         {
-            *pRecieve = _serial.read();            
+            *pRecieve = _serial.read();
             pRecieve++;
         }
     }

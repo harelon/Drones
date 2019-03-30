@@ -8,9 +8,6 @@
 #ifdef ARDUINO_AVR_UNO
     #include <SoftwareSerial.h>
     #define ARDUINO_BOARD
-#else
-    #include <SoftwareSerial32.h>
-    #define HI5_BOARD
 #endif
 
 class BasicSerial

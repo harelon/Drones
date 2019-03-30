@@ -30,11 +30,12 @@ class ScreenLib : public Controller
 {
   private:
     word x, y;
-    ButtonIds _lastButtonId = -1;
+    long _lastButtonTime = -1;
     ButtonIds _currentButtonId = -1;
     Adafruit_ILI9341 lcd;
     SimpleTouchscreen lcdtouch;
     Adafruit_GFX_Button buttons[NUMBER_OF_BUTTONS];
+    char result_message[20];
   protected:
     void OnTemperatureResponse(TemperatureResponse* message) override{};
     void OnRawColorResponse(RawColorResponse* message) override;

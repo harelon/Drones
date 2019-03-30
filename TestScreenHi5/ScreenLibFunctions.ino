@@ -9,8 +9,7 @@ void ScreenLib::MainScreen()
   lcd.drawRect(0, 225, 240, 45, ILI9341_YELLOW);
   lcd.drawRect(0, 271, 240, 45, ILI9341_GREEN);
   PrintStatus(&lcd, "STATUS PANEL");
-  PrintResult(&lcd);
-  lcd.print("RESULT PANEL");
+  PrintResult(&lcd, "RESULT PANEL");
 }
 
 void ScreenLib::PollScreen()
@@ -30,7 +29,8 @@ void ScreenLib::PollScreen()
       }
     }
   }
-  if (_currentButtonId == _lastButtonId)
+  long currentTime = millis();
+  if (currentTime - _lastButtonTime < 500)
   {
     return;
   }
@@ -45,5 +45,6 @@ void ScreenLib::PollScreen()
     case BUTTON_SERVO_BLUE: ServoReq(SERVO_BLUE); break;
     default: break;
   }
-  _lastButtonId = _currentButtonId;
+  _currentButtonId = -1;
+  _lastButtonTime = currentTime;
 }

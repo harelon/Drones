@@ -7,24 +7,27 @@ void HeightFormat(char* result_message, uint16_t num)
   result_message[len++] = (num % 10) + '0';
   result_message[len++] = 0;
 }
-void ColorFormat(char* result_message, MainColors color)
+void ColorFormat(char* result_message, uint32_t color)
 {
   switch (color)
   {
     case MAIN_RED:
-      strcpy(result_message, "RED\0");
+      strcpy(result_message, "RED");
       break;
     case MAIN_GREEN:
-      strcpy(result_message, "GREEN\0");
+      strcpy(result_message, "GREEN");
       break;
     case MAIN_BLUE:
-      strcpy(result_message, "BLUE\0");
+      strcpy(result_message, "BLUE");
       break;
     case MAIN_WHITE:
-      strcpy(result_message, "WHITE\0");
+      strcpy(result_message, "WHITE");
       break;
-    default:
-      strcpy(result_message, "NONE\0");
+    case MAIN_NONE:
+      strcpy(result_message, "NONE");
+      break;
+    case MAIN_INTERMEDIATE:
+      strcpy(result_message, "CAN'T DETERMINE");
       break;
   }
 }
@@ -127,16 +130,16 @@ void ServoFormat(char* result_message, BallStates state)
   switch (state)
   {
     case NOT_LOADED:
-      strcpy(result_message, "NOT LOADED\0");
+      strcpy(result_message, "NOT LOADED");
       break;
     case NEED_TO_LOAD:
-      strcpy(result_message, "NEED TO LOAD\0");
+      strcpy(result_message, "NEED TO LOAD");
       break;
     case LOADED:
-      strcpy(result_message, "LOADED\0");
+      strcpy(result_message, "LOADED");
       break;
     case DROPPED:
-      strcpy(result_message, "DROPPED\0");
+      strcpy(result_message, "DROPPED");
       break;
   }
 }

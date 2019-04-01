@@ -55,4 +55,5 @@ MainColors Utils::RGB2MainColor(uint16_t r, uint16_t g, uint16_t b)
     {
         return MAIN_RED;
     }
+    return MAIN_INTERMEDIATE;
 }

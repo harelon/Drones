@@ -1,7 +1,6 @@
 void * __dso_handle;
 
 #include "Controller.h"
-#include "SPI.h"
 #include "Adafruit_ILI9341.h"
 #include "SimpleTouchscreen.h"
 
@@ -55,21 +54,6 @@ class ScreenLib : public Controller
     ScreenLib();
     void PollScreen();
 };
-
-ScreenLib::ScreenLib() : lcd(TFT_CS, TFT_DC), lcdtouch(T_IRQ, T_SS), Controller() {
-  lcd.begin(5000000);
-  lcdtouch.begin();
-  lcd.setRotation(2);
-  lcdtouch.setRotation(2);
-  buttons[BUTTON_COLOR].initButton(&lcd, 60, 30, 100, 50, ILI9341_BLACK, ILI9341_YELLOW, ILI9341_BLUE, "COLOR", 2);
-  buttons[BUTTON_RAW_COLOR].initButton(&lcd, 180, 30, 120, 50, ILI9341_BLACK, ILI9341_YELLOW, ILI9341_BLUE, "RAW COLOR", 2);
-  buttons[BUTTON_HEIGHT].initButton(&lcd, 60, 85, 100, 50, ILI9341_BLACK, ILI9341_YELLOW, ILI9341_BLUE, "HEIGHT", 2);
-  buttons[BUTTON_GYRO].initButton(&lcd, 180, 85, 100, 50, ILI9341_BLACK, ILI9341_YELLOW, ILI9341_BLUE, "GYRO", 2);
-  buttons[BUTTON_SERVO_RED].initButton(&lcd, 60, 140, 100, 50, ILI9341_BLACK, ILI9341_RED, ILI9341_CYAN, "SERVO", 2);
-  buttons[BUTTON_SERVO_GREEN].initButton(&lcd, 180, 140, 100, 50, ILI9341_BLACK, ILI9341_GREEN, ILI9341_MAGENTA, "SERVO", 2);
-  buttons[BUTTON_SERVO_BLUE].initButton(&lcd, 60, 195, 100, 50, ILI9341_BLACK, ILI9341_BLUE, ILI9341_YELLOW, "SERVO", 2);
-}
-
 
 ScreenLib screen;
 

@@ -3,7 +3,6 @@
 
 #include <MPU6050.h>
 
-#define timeStep 0.2
 class CustomGyro
 {
     private:
@@ -12,6 +11,9 @@ class CustomGyro
         float _roll;
         float _yaw;
         long _startTime;
+        float _lastNormZ = 0;
+        float _lastNormY = 0;
+        float _lastNormX = 0;
     public:
         CustomGyro();
         void begin();

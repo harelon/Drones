@@ -35,9 +35,10 @@ void CustomGyro::startTime()
 void CustomGyro::updateValues()
 {
     Vector norm = _Gyro.readNormalizeGyro();
-
-    _pitch = _pitch + norm.YAxis * timeStep;
-    _roll = _roll + norm.XAxis * timeStep;
-    _yaw = _yaw + norm.ZAxis * timeStep;
-    delay((timeStep*1000) - (millis() - _startTime));
+    _pitch = _pitch + ((_lastNormX + norm.XAxis) / 2) * ((millis()-_startTime)/1000.0);
+    _roll =_roll + ((_lastNormY + norm.YAxis) / 2) * ((millis()-_startTime)/1000.0);
+    _yaw = _yaw + ((_lastNormZ + norm.ZAxis) / 2) * ((millis()-_startTime)/1000.0);
+    _lastNormZ = norm.ZAxis;
+    _lastNormY = norm.YAxis;
+    _lastNormX = norm.XAxis;
 }

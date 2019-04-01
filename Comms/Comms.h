@@ -4,7 +4,8 @@
 #include <BasicSerial.h>
 #include <Utils.h>
 
-#pragma pack(1)
+#pragma pack(push, 1)
+
 typedef struct{
     byte length;
     byte type;
@@ -127,6 +128,7 @@ typedef struct{
    byte state;
 }ServoResponse;
 
+#pragma pack(pop)
 /*end of responses*/
 
 #endif

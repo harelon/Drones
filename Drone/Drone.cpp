@@ -186,6 +186,9 @@ Drone* Drone::SetUpLeds(byte pin)
     {
         Serial.println("leds begun");
     }
+    _cl.SetAll(0xFFFFFF);
+    delay(1000);
+    _cl.TurnOffLed();
     return this;
 }
 

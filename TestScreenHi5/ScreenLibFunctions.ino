@@ -68,6 +68,7 @@ void ScreenLib::WaitForDrone()
   {
     if (b.contains(x, y))
     {
+      DroneConnected = true;
       OnDroneConnected();
       break;
     }

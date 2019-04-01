@@ -1,33 +1,6 @@
 #include <BasicSerial.h>
 
-#ifdef HI5_BOARD
-
-BasicSerial::BasicSerial()
-{
-    Serial.begin(DEFAULT_TRANSMISSION_RATE);
-}
-
-BasicSerial::BasicSerial(long transmissionRate)
-{
-    Serial.begin(transmissionRate);
-}
-
-byte BasicSerial::read()
-{
-    return Serial.read();
-}
-
-byte BasicSerial::write(byte value)
-{
-    return Serial.write(value);
-}
-
-byte BasicSerial::available()
-{
-    return Serial.available();
-}
-
-#else
+#ifdef ARDUINO_BOARD
 
 BasicSerial::BasicSerial(uint8_t rx, uint8_t tx) : _serial(rx, tx)
 {
@@ -54,4 +27,30 @@ byte BasicSerial::available()
     return _serial.available();
 }
 
+#else
+
+BasicSerial::BasicSerial()
+{
+    Serial.begin(DEFAULT_TRANSMISSION_RATE);
+}
+
+BasicSerial::BasicSerial(long transmissionRate)
+{
+    Serial.begin(transmissionRate);
+}
+
+byte BasicSerial::read()
+{
+    return Serial.read();
+}
+
+byte BasicSerial::write(byte value)
+{
+    return Serial.write(value);
+}
+
+byte BasicSerial::available()
+{
+    return Serial.available();
+}
 #endif

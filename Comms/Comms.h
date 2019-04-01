@@ -4,7 +4,7 @@
 #include <BasicSerial.h>
 #include <Utils.h>
 
-#pragma push(1)
+#pragma pack(1)
 typedef struct{
     byte length;
     byte type;

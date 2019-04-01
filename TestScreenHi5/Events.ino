@@ -1,16 +1,8 @@
 void ScreenLib::OnRawColorResponse(RawColorResponse* message)
 {
   PrintStatus(&lcd, "RAW COLOR RESPONDED");
-  //  PrintResult(&lcd);
-  byte r = message->color.r;
-  byte g = message->color.g;
-  byte b = message->color.b;
-  lcd.print("R=");
-  lcd.print(r);
-  lcd.print(" G=");
-  lcd.print(g);
-  lcd.print(" B=");
-  lcd.print(b);
+  RawColorFormat(result_message, message->color);
+  PrintResult(&lcd, result_message);
 }
 void ScreenLib::OnColorResponse(ColorResponse* message)
 {
@@ -27,10 +19,12 @@ void ScreenLib::OnHeightResponse(HeightResponse* message)
 void ScreenLib::OnGyroResponse(GyroResponse* message)
 {
   PrintStatus(&lcd, "GYRO RESPONDED");
-  //  String s = "p=" + String((int)message->angularOrientation.pitch) + " r=" + String((int)message->angularOrientation.roll) + " y=" + String((int)message->angularOrientation.yaw);
-  //  PrintResult(&lcd);
+  GyroFormat(result_message, message->angularOrientation);
+  PrintResult(&lcd, result_message);
 }
 void ScreenLib::OnServoResponse(ServoResponse* message)
 {
   PrintStatus(&lcd, "SERVO RESPONDED");
+  ServoFormat(result_message, message->state);
+  PrintResult(&lcd, result_message);
 }

@@ -28,6 +28,8 @@ class Drone: public Comms
         ServoBall balls[ServoNumbers];
 
     protected:
+        void virtual SendConnectMsg();
+
         void virtual OnTemperatureRequest();
         void virtual OnColorRequest();
         void virtual OnRawColorRequest();
@@ -53,9 +55,9 @@ class Drone: public Comms
 
     public:
         #ifdef ARDUINO_BOARD
-            Drone(uint8_t rx, uint8_t tx):Comms(rx, tx){Wire.begin();}
+            Drone(uint8_t rx, uint8_t tx):Comms(rx, tx){Wire.begin();SendConnectMsg();}
         #else
-            Drone():Comms(){Wire.begin();}
+            Drone():Comms(){Wire.begin();SendConnectMsg();}
         #endif
         Drone* SetUpTempSensor();
         Drone* SetUpColorSensor();

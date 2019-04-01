@@ -36,6 +36,8 @@ class ScreenLib : public Controller
     Adafruit_GFX_Button buttons[NUMBER_OF_BUTTONS];
     char result_message[20];
   protected:
+    void OnConnected();
+
     void OnTemperatureResponse(TemperatureResponse* message) override{};
     void OnRawColorResponse(RawColorResponse* message) override;
     void OnColorResponse(ColorResponse* message) override;
@@ -43,6 +45,8 @@ class ScreenLib : public Controller
     void OnBuzzResponse(BuzzResponse* message) override{};
     void OnGyroResponse(GyroResponse* message) override;
     void OnServoResponse(ServoResponse* message) override;
+    void OnDroneConnected() override;
+    
 
     void HeightReq();
     void RawColorReq();
@@ -50,7 +54,7 @@ class ScreenLib : public Controller
     void ServoReq(ServoColors color);
     void ColorReq();
   public:
-    void MainScreen();
+    void WaitForDrone() override;
     ScreenLib();
     void PollScreen();
 };
@@ -58,7 +62,7 @@ class ScreenLib : public Controller
 ScreenLib screen;
 
 void setup() {
-  screen.MainScreen();
+  screen.WaitForDrone();
 }
 
 void loop() {

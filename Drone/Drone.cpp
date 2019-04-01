@@ -220,6 +220,15 @@ void Drone::DispatchMessage(MessageHeader* message)
     }
 }
 
+void Drone::SendConnectMsg()
+{
+    DroneConnected msg;
+    msg.header.length = sizeof(DroneConnected);
+    msg.header.type = DRONE_CONNECTED;
+
+    SendMessage(&msg.header);
+}
+
 void Drone::OnTemperatureRequest()
 {
     SendTemperature();

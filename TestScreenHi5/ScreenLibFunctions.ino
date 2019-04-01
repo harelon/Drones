@@ -1,4 +1,6 @@
 ScreenLib::ScreenLib() : lcd(TFT_CS, TFT_DC), lcdtouch(T_IRQ, T_SS), Controller() {
+  x = 0;
+  y = 0;
   lcd.begin(5000000);
   lcdtouch.begin();
   lcd.setRotation(2);
@@ -10,20 +12,6 @@ ScreenLib::ScreenLib() : lcd(TFT_CS, TFT_DC), lcdtouch(T_IRQ, T_SS), Controller(
   buttons[BUTTON_SERVO_RED].initButton(&lcd, 60, 140, 100, 50, ILI9341_BLACK, ILI9341_RED, ILI9341_CYAN, "SERVO", 2);
   buttons[BUTTON_SERVO_GREEN].initButton(&lcd, 180, 140, 100, 50, ILI9341_BLACK, ILI9341_GREEN, ILI9341_MAGENTA, "SERVO", 2);
   buttons[BUTTON_SERVO_BLUE].initButton(&lcd, 60, 195, 100, 50, ILI9341_BLACK, ILI9341_BLUE, ILI9341_YELLOW, "SERVO", 2);
-}
-
-void ScreenLib::OnDroneConnected()
-{
-  lcd.fillScreen(ILI9341_BLACK);
-  lcd.setTextSize(2);
-  for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
-  {
-    buttons[i].drawButton();
-  }
-  lcd.drawRect(0, 225, 240, 45, ILI9341_YELLOW);
-  lcd.drawRect(0, 271, 240, 45, ILI9341_GREEN);
-  PrintStatus(&lcd, "STATUS PANEL");
-  PrintResult(&lcd, "RESULT PANEL");
 }
 
 void ScreenLib::PollScreen()
@@ -65,8 +53,46 @@ void ScreenLib::PollScreen()
 
 void ScreenLib::WaitForDrone()
 {
-  while(!DroneConnected)
+  long lastTime = millis();
+  long currentTime = lastTime;
+  Adafruit_GFX_Button b;
+  b.initButton(&lcd, 120, 280, 200, 50, ILI9341_BLACK, ILI9341_YELLOW, ILI9341_BLUE, "Skip", 2);
+  byte numberOfDots = 0;
+  lcd.fillScreen(ILI9341_BLACK);
+  b.drawButton();
+  lcd.setTextSize(2);
+  lcd.setCursor(30, 30);
+  lcd.setTextColor(ILI9341_YELLOW);
+  lcd.print("Connecting");
+  while (!DroneConnected)
   {
+    if (b.contains(x, y))
+    {
+      OnDroneConnected();
+      break;
+    }
     PollMessage();
+    if (currentTime - lastTime > 500)
+    {
+      if (numberOfDots < 3)
+      {
+        lcd.print(".");
+        numberOfDots++;
+      }
+      else
+      {
+        lcd.fillRect(154, 40, 28, 4, ILI9341_BLACK);
+        lcd.setCursor(150, 30);
+        numberOfDots = 0;
+      }
+      lastTime = currentTime;
+    }
+    if (lcdtouch.dataAvailable())
+    {
+      lcdtouch.read();
+      x = lcdtouch.getX();
+      y = lcdtouch.getY();
+    }
+    currentTime = millis();
   }
 }

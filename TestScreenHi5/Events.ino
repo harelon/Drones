@@ -21,8 +21,7 @@ void ScreenLib::OnRawColorResponse(RawColorResponse* message)
 void ScreenLib::OnColorResponse(ColorResponse* message)
 {
   PrintStatus(&lcd, "COLOR RESPONDED");
-  byte* p = (byte*)message + 2;
-  ColorFormat(result_message, (*p++&0xFF)+ ((*p++&0xFF)<<8) + ((*p++&0xFF)<<16));
+  ColorFormat(result_message, message->color);
   PrintResult(&lcd, result_message);
 }
 void ScreenLib::OnHeightResponse(HeightResponse* message)

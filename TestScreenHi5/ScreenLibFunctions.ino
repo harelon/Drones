@@ -12,7 +12,7 @@ ScreenLib::ScreenLib() : lcd(TFT_CS, TFT_DC), lcdtouch(T_IRQ, T_SS), Controller(
   buttons[BUTTON_SERVO_BLUE].initButton(&lcd, 60, 195, 100, 50, ILI9341_BLACK, ILI9341_BLUE, ILI9341_YELLOW, "SERVO", 2);
 }
 
-void ScreenLib::MainScreen()
+void ScreenLib::OnDroneConnected()
 {
   lcd.fillScreen(ILI9341_BLACK);
   lcd.setTextSize(2);
@@ -61,4 +61,12 @@ void ScreenLib::PollScreen()
   }
   _currentButtonId = -1;
   _lastButtonTime = currentTime;
+}
+
+void ScreenLib::WaitForDrone()
+{
+  while(!DroneConnected)
+  {
+    PollMessage();
+  }
 }

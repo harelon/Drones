@@ -15,7 +15,9 @@ class Controller : public Comms
         void RequestForBuzzOff();
         void RequestForGyro();
         void RequestForServoDrop(ServoColors color);
+        bool DroneConnected = false;
 
+        void virtual OnDroneConnected() = 0;
         void virtual OnTemperatureResponse(TemperatureResponse* message) = 0;
         void virtual OnColorResponse(ColorResponse* message) = 0;
         void virtual OnRawColorResponse(RawColorResponse* message) = 0;
@@ -29,5 +31,6 @@ class Controller : public Comms
         #else
             Controller():Comms(){}
         #endif
+        void virtual WaitForDrone() = 0;
 };
 #endif

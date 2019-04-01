@@ -85,6 +85,10 @@ void Controller::DispatchMessage(MessageHeader* message)
 {
     switch (message->type)
     {
+        case DRONE_CONNECTED:
+            DroneConnected = true;
+            OnDroneConnected();
+            break;
         case RESPONSE_FOR_TEMPERATURE:
             OnTemperatureResponse((TemperatureResponse*)message);
             break;

@@ -1,3 +1,17 @@
+void ScreenLib::OnDroneConnected()//Creates main screen graphic
+{
+  lcd.fillScreen(ILI9341_BLACK);
+  lcd.setTextSize(2);
+  for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
+  {
+    buttons[i].drawButton();
+  }
+  lcd.drawRect(0, 225, 240, 45, ILI9341_YELLOW);
+  lcd.drawRect(0, 271, 240, 45, ILI9341_GREEN);
+  PrintStatus(&lcd, "STATUS PANEL");
+  PrintResult(&lcd, "RESULT PANEL");
+}
+
 void ScreenLib::OnRawColorResponse(RawColorResponse* message)
 {
   PrintStatus(&lcd, "RAW COLOR RESPONDED");

@@ -8,6 +8,7 @@ Drone* Drone::SetUpServo(byte pin, ServoColors color)
 Drone* Drone::SetUpServo(byte pin, ServoColors color, BallStates state)
 {
     balls[color].Init(pin, color, state);
+    balls[color].Lock();
     return this;
 }
 
@@ -161,9 +162,9 @@ void Drone::SendAngularOrientation()
     GyroResponse response;
     response.header.length = sizeof(GyroResponse);
     response.header.type = RESPONSE_ANGULAR_ORIENTATION;
-    response.angularOrientation.pitch = _Gyro.GetPitch();
-    response.angularOrientation.roll = _Gyro.GetRoll();
-    response.angularOrientation.yaw = _Gyro.GetYaw();
+    response.angularOrientation.pitch = (int16_t)_Gyro.GetPitch();
+    response.angularOrientation.roll = (int16_t)_Gyro.GetRoll();
+    response.angularOrientation.yaw = (int16_t)_Gyro.GetYaw();
     SendMessage(&response.header);
 }
 

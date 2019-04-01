@@ -17,7 +17,6 @@ class Drone: public Comms
         byte _echo;
         MainColors _sensedColor;
         CustomLed _cl;
-        CustomGyro _Gyro;
         SparkFun_APDS9960 _LightSensor;
         const float transmitionRate = 255.0 / 37889.0;
         uint16_t ambient_light = 0;
@@ -66,5 +65,6 @@ class Drone: public Comms
         Drone* SetUpServo(byte pin, ServoColors color);
         Drone* SetUpServo(byte pin, ServoColors color, BallStates state);
         Drone* SetUpLeds(byte pin);
+        CustomGyro _Gyro;
 };
 #endif

@@ -6,7 +6,15 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Services {
@@ -14,24 +22,51 @@ public class Services {
     @SuppressLint("StaticFieldLeak")
     private static Context _mainActivity;
     private static BluetoothHandler _bh;
-    private static List<String> _discoveredDevices;
+    private static List<String> _discoveredDevices = new ArrayList<>();
+    private static RecyclerViewAdapter _rva;
+    private static TaskCompletionSource<Boolean> tcs = new TaskCompletionSource<Boolean>();
     private static final BroadcastReceiver _discoveryFinishReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
+            Log.d("bluetoothModule", "action is " + action);
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                Log.d("bluetoothModule", device.getName()!=null?device.getName():"null" + "\n" + device.getAddress());
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    _discoveredDevices.add(device.getName());
+//                    _discoveredDevices.add(device.getName() + "\n" + device.getAddress());
+                    _rva.add(device.getName() + "\n" + device.getAddress());
+                    Log.d("bluetoothModule", _rva.toString());
                 }
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action) && _discoveredDevices.size()==0) {
+                Log.d("bluetoothModule", "no devices were found");
             }
         }
     };
+    public static RecyclerViewAdapter getDeviceListAdapter()
+    {
+        Log.d("bluetoothModule", "rva set");
+        return _rva;
+    }
     public static void init() {
+        Log.d("bluetoothModule", "services initialized");
+         _rva = new RecyclerViewAdapter(_discoveredDevices);
         _appContext = MyApplication.getAppContext();
-        _bh = new BluetoothHandler();
+        if(tcs.getTask().isComplete())
+        {
+            _bh = new BluetoothHandler();
+            _bh.discover();
+        }
+        else {
+            tcs.getTask().addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                @Override
+                public void onComplete(@NonNull Task<Boolean> task) {
+                    _bh = new BluetoothHandler();
+                    _bh.discover();
+                }
+            });
+        }
     }
 
     static Context getAppContext() {
@@ -41,14 +76,22 @@ public class Services {
     static void setMainActivity(Context mainActivity)
     {
         _mainActivity = mainActivity;
+        if(!tcs.getTask().isComplete()) {
+            tcs.setResult(true);
+        }
     }
-    static Context getMainActiviy()
+    static Context getMainActivity()
     {
         return  _mainActivity;
     }
     static  BroadcastReceiver getDiscoveryFinishReceiver()
     {
+        Log.d("bluetoothModule", "return registeration reciver");
         return  _discoveryFinishReceiver;
+    }
+    static BluetoothHandler getBH()
+    {
+        return _bh;
     }
 //    public static Task<Boolean> mainActivitySet()
 //    {

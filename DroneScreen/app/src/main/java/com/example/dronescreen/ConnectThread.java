@@ -92,6 +92,7 @@ class ConnectThread extends Thread {
 
             // Keep listening to the InputStream
             while (true) {
+                write(new byte[]{17});
                 try {
                     // Read from the InputStream
                     bytes = inputStream.read(buffer);

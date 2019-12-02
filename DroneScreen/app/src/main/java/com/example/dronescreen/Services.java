@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Services {
@@ -24,6 +25,7 @@ public class Services {
     private static BluetoothHandler _bh;
     private static List<String> _discoveredDevices = new ArrayList<>();
     private static RecyclerViewAdapter _rva;
+    private static HashMap<String, BluetoothDevice> idToDeviceDictionary = new HashMap<>();
     private static TaskCompletionSource<Boolean> tcs = new TaskCompletionSource<Boolean>();
     private static final BroadcastReceiver _discoveryFinishReceiver = new BroadcastReceiver() {
         @Override
@@ -37,6 +39,7 @@ public class Services {
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
 //                    _discoveredDevices.add(device.getName() + "\n" + device.getAddress());
                     _rva.add(device.getName() + "\n" + device.getAddress());
+                    idToDeviceDictionary.put(device.getName() + "\n" + device.getAddress(),device);
                     Log.d("bluetoothModule", _rva.toString());
                 }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action) && _discoveredDevices.size()==0) {
@@ -92,6 +95,10 @@ public class Services {
     static BluetoothHandler getBH()
     {
         return _bh;
+    }
+    public static HashMap<String, BluetoothDevice> getDeviceDictionary()
+    {
+        return idToDeviceDictionary;
     }
 //    public static Task<Boolean> mainActivitySet()
 //    {

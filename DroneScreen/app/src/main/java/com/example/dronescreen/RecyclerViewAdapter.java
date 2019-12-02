@@ -45,12 +45,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.discovered_device, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
-//        vh.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mClickListener.onClick(view);
-//            }
-//        });
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClickListener.onClick(view);
+            }
+        });
         return vh;
     }
 

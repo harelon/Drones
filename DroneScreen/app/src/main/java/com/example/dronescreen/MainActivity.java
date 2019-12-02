@@ -3,6 +3,8 @@ package com.example.dronescreen;
 import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Services.getAppContext(), LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(Services.getDeviceListAdapter());
+        rv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectThread thread = new ConnectThread(Services.getDeviceDictionary().get(((TextView)v).getText().toString()));
+                thread.start();
+            }
+        });
         Log.d("bluetoothModule", rv.getAdapter().toString());
     }
 

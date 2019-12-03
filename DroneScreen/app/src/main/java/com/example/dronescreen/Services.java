@@ -99,10 +99,5 @@ public class Services {
     {
         return idToDeviceDictionary;
     }
-//    public static Task<Boolean> mainActivitySet()
-//    {
-//
-//    }
-
 
 }

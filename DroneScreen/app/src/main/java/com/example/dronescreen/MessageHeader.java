@@ -15,13 +15,29 @@ class MessageHeader {
         }
     }
 
-    protected byte _length;
-    protected Type _type;
+    private Byte _length;
+    private Type _type;
 
-    protected MessageHeader(int length, Type type)
+    public MessageHeader()
+    {
+        _length = null;
+        _type = null;
+    }
+
+    public MessageHeader(int length, Type type)
     {
         _length = (byte)length;
         _type = type;
+    }
+
+    public void setLength(int length)
+    {
+     _length = (byte)length;
+    }
+
+    public Byte getLength()
+    {
+        return _length;
     }
 
     public void writeTo(byte[] data)
@@ -33,5 +49,15 @@ class MessageHeader {
     public byte[] serialize()
     {
         return new byte[]{_length,_type.toByte()};
+    }
+    public static MessageHeader deserialize(byte[] buffer)
+    {
+        MessageHeader msg = new MessageHeader(buffer[0],Type.values()[buffer[1]]);
+        switch (msg._type)
+        {
+            case REQUEST_FOR_HEIGHT:
+                msg = (HeightRequest)msg;
+        }
+        return msg;
     }
 }

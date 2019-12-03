@@ -22,14 +22,6 @@ public class BluetoothHandler {
         }
     }
 
-    public void cancelDiscovery()
-    {
-        _bluetoothAdapter.cancelDiscovery();
-    }
-    public BluetoothAdapter getBA()
-    {
-        return  _bluetoothAdapter;
-    }
     public void discover()
     {
         Log.d("bluetoothModule", "registering finding");

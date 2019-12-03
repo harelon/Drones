@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView tv  = v.findViewById(R.id.textName);
                 ConnectThread thread = new ConnectThread(Services.getDeviceDictionary().get(tv.getText().toString()));
                 thread.start();
+                MessageHandler.setThread(thread);
             }
         });
         rv.setAdapter(Services.getDeviceListAdapter());

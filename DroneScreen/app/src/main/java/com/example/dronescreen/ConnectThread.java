@@ -5,8 +5,6 @@ import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.UUID;
 //Arduino bluetooth baud rate must be 38400 !!!!!!!
 class ConnectThread extends Thread {
@@ -75,88 +73,4 @@ class ConnectThread extends Thread {
         }
     }
 
-    private class ReadWriteThread extends Thread {
-        private final BluetoothSocket bluetoothSocket;
-        private final InputStream inputStream;
-        private final OutputStream outputStream;
-        private MessageHandler _handler;
-
-        public ReadWriteThread(BluetoothSocket socket) {
-            this.bluetoothSocket = socket;
-            InputStream tmpIn = null;
-            OutputStream tmpOut = null;
-
-            try {
-                tmpIn = socket.getInputStream();
-                Log.d("bluetoothModule", tmpIn!=null?tmpIn.toString():"input is null");
-                tmpOut = socket.getOutputStream();
-                Log.d("bluetoothModule", tmpOut!=null?tmpOut.toString():"output is null");
-                _handler = new MessageHandler();
-            } catch (IOException e) {
-            }
-
-            inputStream = tmpIn;
-            outputStream = tmpOut;
-        }
-
-        public void run() {
-            byte[] buffer = new byte[1024];
-            int bytes;
-
-            // Keep listening to the InputStream
-            while (true) {
-                Log.d("bluetoothModule", "inside while true");
-                write(new byte[]{17,(byte)221,36});
-                try {
-                    // Read from the InputStream
-                    bytes = inputStream.read(buffer);
-                    Log.d("bluetoothModule", "bytes read");
-                    // Send the obtained bytes to the UI Activity
-                    _handler.obtainMessage(MessageHandler.MESSAGE_READ, bytes,
-                            buffer).sendToTarget();
-                    Log.d("bluetoothModule", "obtained message");
-
-                } catch (IOException e) {
-                    connectionLost();
-                    // Start the service over to restart listening mode
-                    this.start();
-                    break;
-                }
-            }
-        }
-        public void connectionLost()
-        {
-            Log.d("bluetoothModule", "connection lost");
-        }
-        // write to OutputStream
-        public void write(byte[] buffer) {
-            Log.d("bluetoothModule", "write is called");
-            try {
-                String buff = "asd";
-                for(byte b : buffer)
-                {
-                    if(b!=0)
-                    {
-                        buff +=Byte.toString(b);
-                    }
-                }
-                Log.d("bluetoothModule", buff);
-                outputStream.write(buffer);
-                Log.d("bluetoothModule", "wrote buffer");
-                _handler.obtainMessage(MessageHandler.MESSAGE_WRITE, -1,
-                        buffer).sendToTarget();
-                Log.d("bluetoothModule", "obtained message");
-            } catch (IOException e) {
-                Log.e("bluetoothModule", e.toString());
-            }
-        }
-
-        public void cancel() {
-            try {
-                bluetoothSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

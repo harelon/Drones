@@ -21,18 +21,17 @@ public class MainActivity extends AppCompatActivity {
         String[] permissions = new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.ACCESS_COARSE_LOCATION};
         ActivityCompat.requestPermissions(MainActivity.this, permissions,1);
         RecyclerView rv = findViewById(R.id.rv);
-
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Services.getAppContext(), LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(layoutManager);
-        rv.setAdapter(Services.getDeviceListAdapter());
-        rv.setOnClickListener(new View.OnClickListener() {
+        Services.getDeviceListAdapter().setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectThread thread = new ConnectThread(Services.getDeviceDictionary().get(((TextView)v).getText().toString()));
+                TextView tv  = v.findViewById(R.id.textName);
+                ConnectThread thread = new ConnectThread(Services.getDeviceDictionary().get(tv.getText().toString()));
                 thread.start();
             }
         });
+        rv.setAdapter(Services.getDeviceListAdapter());
         Log.d("bluetoothModule", rv.getAdapter().toString());
     }
 

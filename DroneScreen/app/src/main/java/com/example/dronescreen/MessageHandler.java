@@ -6,7 +6,6 @@ public class MessageHandler {
     private MessageHeader message;
     public MessageHandler obtainMessage(int messageType, int count, byte[] buffer)
     {
-
         return this;
     }
     public void sendToTarget()

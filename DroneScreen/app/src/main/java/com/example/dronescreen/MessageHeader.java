@@ -3,18 +3,33 @@ package com.example.dronescreen;
 class MessageHeader {
     protected enum Type
     {
-        REQUEST_FOR_HEIGHT((byte)7);
+        DRONE_CONNECTED(0),
+        REQUEST_FOR_TEMPERATURE(1),
+        RESPONSE_FOR_TEMPERATURE (2),
+        REQUEST_FOR_COLOR( 3),
+        RESPONSE_FOR_COLOR (4),
+        REQUEST_RAW_COLOR (5),
+        RESPONSE_RAW_COLOR (6),
+        REQUEST_FOR_HEIGHT ( 7),
+        RESPONSE_FOR_HEIGHT (8),
+        REQUEST_BUZZ_ON (9),
+        RESPONSE_BUZZ_ON (10),
+        REQUEST_BUZZ_OFF (11),
+        RESPONSE_BUZZ_OFF (12),
+        REQUEST_ANGULAR_ORIENTATION (13),
+        RESPONSE_ANGULAR_ORIENTATION (14),
+        REQUEST_SERVO_DROP (15),
+        RESPONSE_SERVO_DROP(16);
 
         private final byte _typeNumber;
-        Type(byte typeNumber) {
-            _typeNumber = typeNumber;
+        Type(int typeNumber) {
+            _typeNumber = (byte)typeNumber;
         }
         byte toByte()
         {
             return _typeNumber;
         }
     }
-
     private Byte _length;
     private Type _type;
 
@@ -50,14 +65,9 @@ class MessageHeader {
     {
         return new byte[]{_length,_type.toByte()};
     }
-    public static MessageHeader deserialize(byte[] buffer)
+    public  void deserialize(byte[] buffer)
     {
-        MessageHeader msg = new MessageHeader(buffer[0],Type.values()[buffer[1]]);
-        switch (msg._type)
-        {
-            case REQUEST_FOR_HEIGHT:
-                msg = (HeightRequest)msg;
-        }
-        return msg;
+        _length = buffer[0];
+        _type = Type.values()[buffer[1]];
     }
 }

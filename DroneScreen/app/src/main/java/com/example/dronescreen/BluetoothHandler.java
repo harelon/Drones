@@ -21,6 +21,10 @@ public class BluetoothHandler {
             ((AppCompatActivity)Services.getMainActivity()).startActivityForResult( enableIntent, 1);
         }
     }
+    public void cancelDiscovery()
+    {
+        _bluetoothAdapter.cancelDiscovery();
+    }
 
     public void discover()
     {

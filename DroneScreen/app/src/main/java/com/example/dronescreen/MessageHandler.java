@@ -1,21 +1,13 @@
 package com.example.dronescreen;
 
 public class MessageHandler {
-    private static MessageHeader _message = new MessageHeader();
     private static ReadWriteThread _thread;
-    public static boolean obtainMessage(int count, byte[] buffer)
+    private static MessageHeader[] _messages = new MessageHeader[]{new HeightRequest()};
+    public static int obtainMessage(int count, byte[] buffer)
     {
-        if(_message.getLength()==null) {
-            _message.setLength(buffer[0]);
-        }
-        if(count >= _message.getLength())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        int index = buffer[1];
+        _messages[index].deserialize(buffer);
+        return index;
     }
     public static void sendMessage(MessageHeader message)
     {
@@ -24,5 +16,9 @@ public class MessageHandler {
     public static void setThread(ReadWriteThread thread)
     {
         _thread = thread;
+    }
+    public static  MessageHeader[] getMessages()
+    {
+        return _messages;
     }
 }

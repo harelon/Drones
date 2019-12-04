@@ -41,10 +41,14 @@ public class ReadWriteThread extends Thread {
                 //Blocking function!!!!!!!!!!!!!!!!
                 bytes += inputStream.read(buffer);
                 Log.d("bluetoothModule", "bytes read");
-                // Send the obtained bytes to the UI Activity
-                if(MessageHandler.obtainMessage(bytes, buffer))
-                {
-                    bytes = 0;
+                if(bytes > buffer[0]) {
+                    // Send the obtained bytes to the UI Activity
+                    int index = MessageHandler.obtainMessage(bytes, buffer);
+                    MessageHeader msg = MessageHandler.getMessages()[index];
+                    while(bytes>=msg.getLength())
+                    {
+                        buffer[bytes-msg.getLength()]=buffer[bytes--];
+                    }
                 }
                 Log.d("bluetoothModule", "obtained message");
 

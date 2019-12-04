@@ -1,6 +1,8 @@
 package com.example.dronescreen;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private Context _context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        _context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Services.setMainActivity(this);
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView tv  = v.findViewById(R.id.textName);
                 ConnectThread thread = new ConnectThread(Services.getDeviceDictionary().get(tv.getText().toString()));
                 thread.start();
-                MessageHandler.setThread(thread);
+                startActivity(new Intent(_context ,RequestActivity.class));
             }
         });
         rv.setAdapter(Services.getDeviceListAdapter());

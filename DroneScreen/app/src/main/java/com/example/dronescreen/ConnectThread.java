@@ -52,6 +52,7 @@ class ConnectThread extends Thread {
             _thread = null;
         }
 
+        Services.getBluetoothHandler().cancelDiscovery();
         // Start the connected thread
         connected();
     }
@@ -69,6 +70,7 @@ class ConnectThread extends Thread {
             _thread = new ReadWriteThread(_socket);
             Log.d("bluetoothModule", "read write thread initlaized");
             _thread.start();
+            MessageHandler.setThread(_thread);
             Log.d("bluetoothModule", "read write thread started");
         }
     }

@@ -65,7 +65,7 @@ class MessageHeader {
     {
         return new byte[]{_length,_type.toByte()};
     }
-    public  void deserialize(byte[] buffer)
+    public  void load(byte[] buffer)
     {
         _length = buffer[0];
         _type = Type.values()[buffer[1]];

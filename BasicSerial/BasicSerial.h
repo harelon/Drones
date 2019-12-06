@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define DEFAULT_TRANSMISSION_RATE 9600
+#define DEFAULT_TRANSMISSION_RATE 38400
 
 #ifdef ARDUINO_AVR_UNO
     #include <SoftwareSerial.h>

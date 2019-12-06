@@ -21,11 +21,11 @@ public class BluetoothHandler {
             ((AppCompatActivity)Services.getMainActivity()).startActivityForResult( enableIntent, 1);
         }
     }
-
-    public BluetoothAdapter getBA()
+    public void cancelDiscovery()
     {
-        return  _bluetoothAdapter;
+        _bluetoothAdapter.cancelDiscovery();
     }
+
     public void discover()
     {
         Log.d("bluetoothModule", "registering finding");

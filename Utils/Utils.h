@@ -8,7 +8,7 @@ typedef enum {
   MAIN_RED =    0xFF0000,
   MAIN_GREEN =  0x00FF00,
   MAIN_BLUE =   0x0000FF,
-  MAIN_ WHITE = 0xFFFFFF,
+  MAIN_WHITE = 0xFFFFFF,
   MAIN_INTERMEDIATE = 0x000001,
 } MainColors;
 

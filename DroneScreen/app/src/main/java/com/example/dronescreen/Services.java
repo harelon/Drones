@@ -36,12 +36,11 @@ public class Services {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 Log.d("bluetoothModule", device.getName()!=null?device.getName():"null" + "\n" + device.getAddress());
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+//                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
 //                    _discoveredDevices.add(device.getName() + "\n" + device.getAddress());
                     _rva.add(device.getName() + "\n" + device.getAddress());
                     idToDeviceDictionary.put(device.getName() + "\n" + device.getAddress(),device);
-                    Log.d("bluetoothModule", _rva.toString());
-                }
+//                }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action) && _discoveredDevices.size()==0) {
                 Log.d("bluetoothModule", "no devices were found");
             }
@@ -92,7 +91,7 @@ public class Services {
         Log.d("bluetoothModule", "return registeration reciver");
         return  _discoveryFinishReceiver;
     }
-    static BluetoothHandler getBH()
+    static BluetoothHandler getBluetoothHandler()
     {
         return _bh;
     }
@@ -100,10 +99,5 @@ public class Services {
     {
         return idToDeviceDictionary;
     }
-//    public static Task<Boolean> mainActivitySet()
-//    {
-//
-//    }
-
 
 }

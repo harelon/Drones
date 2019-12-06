@@ -75,7 +75,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void add(String item) {
-        mDataset.add(item);
+        if(!mDataset.contains(item)) {
+            mDataset.add(item);
+        }
         Log.d("bluetoothModule", mDataset.toString());
         super.notifyDataSetChanged();
     }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DroneScreen</string>
+    <string name="request_height">Request Height</string>
 </resources>

@@ -70,7 +70,6 @@ class ConnectThread extends Thread {
             _thread = new ReadWriteThread(_socket);
             Log.d("bluetoothModule", "read write thread initlaized");
             _thread.start();
-            MessageHandler.setThread(_thread);
             Log.d("bluetoothModule", "read write thread started");
         }
     }

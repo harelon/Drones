@@ -20,8 +20,10 @@ import java.util.List;
 
 public class Services {
     private static Context _appContext;
+    private static MessageCracker _messageCracker;
     @SuppressLint("StaticFieldLeak")
     private static Context _mainActivity;
+    private static ReadWriteThread _readWriteThread;
     private static BluetoothHandler _bh;
     private static List<String> _discoveredDevices = new ArrayList<>();
     private static RecyclerViewAdapter _rva;
@@ -38,8 +40,8 @@ public class Services {
                 Log.d("bluetoothModule", device.getName()!=null?device.getName():"null" + "\n" + device.getAddress());
 //                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
 //                    _discoveredDevices.add(device.getName() + "\n" + device.getAddress());
-                    _rva.add(device.getName() + "\n" + device.getAddress());
-                    idToDeviceDictionary.put(device.getName() + "\n" + device.getAddress(),device);
+                _rva.add(device.getName() + "\n" + device.getAddress());
+                idToDeviceDictionary.put(device.getName() + "\n" + device.getAddress(),device);
 //                }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action) && _discoveredDevices.size()==0) {
                 Log.d("bluetoothModule", "no devices were found");
@@ -53,7 +55,7 @@ public class Services {
     }
     public static void init() {
         Log.d("bluetoothModule", "services initialized");
-         _rva = new RecyclerViewAdapter(_discoveredDevices);
+        _rva = new RecyclerViewAdapter(_discoveredDevices);
         _appContext = MyApplication.getAppContext();
         if(tcs.getTask().isComplete())
         {
@@ -99,5 +101,20 @@ public class Services {
     {
         return idToDeviceDictionary;
     }
-
+    public static ReadWriteThread getReadWriteThread()
+    {
+        return _readWriteThread;
+    }
+    public static void setReadWriteThread(ReadWriteThread readWriteThread)
+    {
+        _readWriteThread = readWriteThread;
+    }
+    public static void setMessageCracker(MessageCracker messageCracker)
+    {
+        _messageCracker = messageCracker;
+    }
+    public static MessageCracker getMessageCracker()
+    {
+        return _messageCracker;
+    }
 }

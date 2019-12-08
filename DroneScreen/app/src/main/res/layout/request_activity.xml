@@ -8,12 +8,12 @@
     tools:context=".RequestActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/requestHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="89dp"
         android:layout_marginLeft="89dp"
-        android:text="Button"
+        android:text="@string/request_height"
         android:onClick="requestHeight"
         app:layout_constraintBottom_toBottomOf="@+id/button3"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,13 +31,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/heightResponse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="26dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        android:text="no height"
+        app:layout_constraintStart_toStartOf="@+id/requestHeight"
+        app:layout_constraintTop_toBottomOf="@+id/requestHeight" />
 </androidx.constraintlayout.widget.ConstraintLayout>

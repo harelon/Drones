@@ -33,16 +33,17 @@ class MessageHeader {
     private Byte _length;
     private Type _type;
 
-    public MessageHeader()
-    {
-        _length = null;
-        _type = null;
-    }
 
     public MessageHeader(int length, Type type)
     {
         _length = (byte)length;
         _type = type;
+    }
+
+    public MessageHeader(byte [] buffer)
+    {
+        _length = buffer[0];
+        _type = Type.values()[buffer[1]];
     }
 
     public void setLength(int length)
@@ -64,10 +65,5 @@ class MessageHeader {
     public byte[] serialize()
     {
         return new byte[]{_length,_type.toByte()};
-    }
-    public  void load(byte[] buffer)
-    {
-        _length = buffer[0];
-        _type = Type.values()[buffer[1]];
     }
 }

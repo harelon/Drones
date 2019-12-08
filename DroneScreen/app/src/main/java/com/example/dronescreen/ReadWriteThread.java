@@ -40,13 +40,14 @@ public class ReadWriteThread extends Thread {
                 // Read from the InputStream
                 //Blocking function!!!!!!!!!!!!!!!!
                 bytes += inputStream.read(buffer,bytes,1);
+                Log.d("bluetoothModule", "bytes read " + buffer[bytes-1]);
+                Log.d("bytes", Integer.toString(bytes));
+
                 if(bytes==buffer[0])
                 {
                     Services.getMessageCracker().crack(buffer);
                     resetBuffer();
                 }
-                Log.d("bluetoothModule", "bytes read");
-
             } catch (IOException e) {
                 connectionLost();
                 // Start the service over to restart listening mode
@@ -60,6 +61,8 @@ public class ReadWriteThread extends Thread {
     {
         byte length = buffer[0];
         System.arraycopy(buffer, length, buffer, 0,buffer.length-length);
+        bytes -= length;
+        Log.d("thread","buffer reset");
     }
     public void sendMessage(MessageHeader msg)
     {

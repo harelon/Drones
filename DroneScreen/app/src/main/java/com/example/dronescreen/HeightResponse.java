@@ -11,8 +11,8 @@ public class HeightResponse extends MessageHeader {
     public HeightResponse(byte [] buffer)
     {
         super(buffer);
-        _height = buffer[2]<<8;
-        _height += buffer[3];
+        _height = buffer[3]<<8;
+        _height += buffer[2];
     }
 
     public int getHeight()

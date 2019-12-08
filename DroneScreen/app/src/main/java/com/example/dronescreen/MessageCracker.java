@@ -8,7 +8,6 @@ public class MessageCracker {
     }
     public void crack(byte [] buffer)
     {
-        int length = buffer[0];
         MessageHeader.Type msgType = MessageHeader.Type.values()[buffer[1]];
         switch (msgType)
         {

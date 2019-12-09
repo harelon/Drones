@@ -15,9 +15,26 @@ public class RequestActivity extends AppCompatActivity implements MessageHandler
         Services.setMessageCracker(new MessageCracker(this));
     }
 
+    public void requestColor(View view) {
+        Services.getReadWriteThread().sendMessage(new ColorRequest());
+        Log.d("thread","color request sent");
+    }
+
     public void requestHeight(View view) {
         Services.getReadWriteThread().sendMessage(new HeightRequest());
         Log.d("thread","height request sent");
+    }
+
+    @Override
+    public void onMessage(final ColorResponse msg) {
+            Log.d("thread","color response received");
+            findViewById(R.id.heightResponse).post(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("thread","thread was run");
+                    ((TextView)findViewById(R.id.colorResponse)).setText(Long.toString(msg.getColor().getHex()));
+                }
+            });
     }
 
     @Override

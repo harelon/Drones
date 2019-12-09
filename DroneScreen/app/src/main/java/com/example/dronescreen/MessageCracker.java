@@ -13,10 +13,16 @@ public class MessageCracker {
         {
             case DRONE_CONNECTED:
                 break;
-            case RESPONSE_FOR_HEIGHT:
+            case RESPONSE_FOR_COLOR: {
+                ColorResponse msg = new ColorResponse(buffer);
+                _messageHandler.onMessage(msg);
+                break;
+            }
+            case RESPONSE_FOR_HEIGHT: {
                 HeightResponse msg = new HeightResponse(buffer);
                 _messageHandler.onMessage(msg);
                 break;
+            }
         }
     }
 }

@@ -30,8 +30,8 @@ class MessageHeader {
             return _typeNumber;
         }
     }
-    private Byte _length;
-    private Type _type;
+    protected Byte _length;
+    protected Type _type;
 
 
     public MessageHeader(int length, Type type)

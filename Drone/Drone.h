@@ -6,7 +6,7 @@
 #include <HDC1080JS.h>
 #include <CustomGyro.h>
 #include <Comms.h>
-#include <CustomLed.h>
+#include <CustomLedV2.h>
 #include <ServoBall.h>
 
 #define ServoNumbers 3
@@ -16,7 +16,7 @@ class Drone: public Comms
         HDC1080JS _TempSensor;
         byte _echo;
         MainColors _sensedColor;
-        CustomLed _cl;
+        CustomLedV2 _cl;
         SparkFun_APDS9960 _LightSensor;
         const float transmitionRate = 255.0 / 37889.0;
         uint16_t ambient_light = 0;
@@ -38,6 +38,7 @@ class Drone: public Comms
         void virtual OnBuzzerOffRequest();
         void virtual OnAngularOrientationRequest();
         void virtual OnBallDropRequest(ServoRequest* message);
+        void virtual OnLedRequest(LedRequest* message);
 
         void SendTemperature();
         void SendColor();
@@ -47,7 +48,9 @@ class Drone: public Comms
         void TurnBuzzerOff();
         void SendAngularOrientation();
         void SendBallDrop(ServoRequest* message);
+        void SendSetLeds(LedRequest* message);
         BallStates DropBall(ServoColors color);
+        void SetLeds(rgbColor color, byte wing);
 
         void ReadColor();
         void SenseHeight();

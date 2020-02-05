@@ -3,7 +3,7 @@ Drone drone(9, 10);
 Drone* droneRef = &drone;
 void setup() {
   Serial.begin(9600);
-  droneRef/*->SetUpHeightSensor(11)*/->SetUpColorSensor();
+  droneRef->SetUpLeds(A0)->SetUpTempSensor();///*->SetUpHeightSensor(11)*/->SetUpColorSensor();
   //  droneRef->SetUpColorSensor()->SetUpHeightSensor(8)->SetUpGyro()->SetUpLeds(7);
   //  droneRef->SetUpServo(9, SERVO_RED)->SetUpServo(10, SERVO_GREEN)->SetUpServo(11, SERVO_BLUE);
 }

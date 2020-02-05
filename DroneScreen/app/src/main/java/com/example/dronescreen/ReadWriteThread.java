@@ -40,7 +40,7 @@ public class ReadWriteThread extends Thread {
                 // Read from the InputStream
                 //Blocking function!!!!!!!!!!!!!!!!
                 bytes += inputStream.read(buffer,bytes,1);
-                Log.d("bluetoothModule", "bytes read " + buffer[bytes-1]);
+                Log.d("bluetoothModule", "bytes read " + (int)(buffer[bytes-1]&0xFF));
                 Log.d("bytes", Integer.toString(bytes));
 
                 if(bytes==buffer[0])

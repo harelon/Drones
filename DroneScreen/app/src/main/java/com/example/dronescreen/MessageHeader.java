@@ -19,7 +19,9 @@ class MessageHeader {
         REQUEST_ANGULAR_ORIENTATION (13),
         RESPONSE_ANGULAR_ORIENTATION (14),
         REQUEST_SERVO_DROP (15),
-        RESPONSE_SERVO_DROP(16);
+        RESPONSE_SERVO_DROP(16),
+        REQUEST_LED_ON(17),
+        RESPONSE_LED_ON(18);
 
         private final byte _typeNumber;
         Type(int typeNumber) {

@@ -35,23 +35,25 @@ class Comms
 
 enum MessageTypes
 {
-    DRONE_CONNECTED = 0,
-    REQUEST_FOR_TEMPERATURE = 1,
-    RESPONSE_FOR_TEMPERATURE = 2,
-    REQUEST_FOR_COLOR = 3,
-    RESPONSE_FOR_COLOR = 4,
-    REQUEST_RAW_COLOR = 5,
-    RESPONSE_RAW_COLOR = 6,
-    REQUEST_FOR_HEIGHT = 7,
-    RESPONSE_FOR_HEIGHT = 8,
-    REQUEST_BUZZ_ON = 9,
-    RESPONSE_BUZZ_ON = 10,
-    REQUEST_BUZZ_OFF = 11,
-    RESPONSE_BUZZ_OFF = 12,
-    REQUEST_ANGULAR_ORIENTATION = 13,
-    RESPONSE_ANGULAR_ORIENTATION = 14,
-    REQUEST_SERVO_DROP = 15,
-    RESPONSE_SERVO_DROP = 16,
+   DRONE_CONNECTED = 0,
+   REQUEST_FOR_TEMPERATURE = 1,
+   RESPONSE_FOR_TEMPERATURE = 2,
+   REQUEST_FOR_COLOR = 3,
+   RESPONSE_FOR_COLOR = 4,
+   REQUEST_RAW_COLOR = 5,
+   RESPONSE_RAW_COLOR = 6,
+   REQUEST_FOR_HEIGHT = 7,
+   RESPONSE_FOR_HEIGHT = 8,
+   REQUEST_BUZZ_ON = 9,
+   RESPONSE_BUZZ_ON = 10,
+   REQUEST_BUZZ_OFF = 11,
+   RESPONSE_BUZZ_OFF = 12,
+   REQUEST_ANGULAR_ORIENTATION = 13,
+   RESPONSE_ANGULAR_ORIENTATION = 14,
+   REQUEST_SERVO_DROP = 15,
+   RESPONSE_SERVO_DROP = 16,
+   REQUEST_LED_ON = 17,
+   RESPONSE_LED_ON = 18,
 };
 
 typedef struct {
@@ -91,6 +93,12 @@ typedef struct{
    byte servoColor;
 }ServoRequest;
 
+typedef struct{
+   MessageHeader header;
+   byte wing;
+   rgbColor color;
+}LedRequest;
+
 /*end of requests*/
 /*start of responses*/
 
@@ -127,6 +135,10 @@ typedef struct{
    MessageHeader header;
    byte state;
 }ServoResponse;
+
+typedef struct{
+   MessageHeader header;
+}LedResponse;
 
 #pragma pack(pop)
 /*end of responses*/

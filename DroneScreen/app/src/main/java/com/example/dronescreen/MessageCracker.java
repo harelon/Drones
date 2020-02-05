@@ -15,11 +15,21 @@ public class MessageCracker {
                 break;
             case RESPONSE_FOR_COLOR: {
                 ColorResponse msg = new ColorResponse(buffer);
-                _messageHandler.onMessage(msg);
+//                _messageHandler.onMessage(msg);
                 break;
             }
             case RESPONSE_FOR_HEIGHT: {
                 HeightResponse msg = new HeightResponse(buffer);
+//                _messageHandler.onMessage(msg);
+                break;
+            }
+            case RESPONSE_LED_ON: {
+                LedResponse msg = new LedResponse(buffer);
+                _messageHandler.onMessage(msg);
+                break;
+            }
+            case RESPONSE_FOR_TEMPERATURE:{
+                TemperatureResponse msg = new TemperatureResponse(buffer);
                 _messageHandler.onMessage(msg);
                 break;
             }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,49 +7,125 @@
     android:orientation="vertical"
     tools:context=".RequestActivity">
 
-    <Button
-        android:id="@+id/requestHeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="89dp"
-        android:layout_marginLeft="89dp"
-        android:onClick="requestHeight"
-        android:text="@string/request_height"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button3" />
+<!--    <Button-->
+<!--        android:id="@+id/requestHeight"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginVertical="30dp"-->
+<!--        android:layout_marginStart="100dp"-->
+<!--        android:layout_marginLeft="100dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:onClick="requestHeight"-->
+<!--        android:text="@string/request_height"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/requestColor"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/requestColor" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/requestColor"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginVertical="30dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginBottom="30dp"-->
+<!--        android:onClick="requestColor"-->
+<!--        android:text="Request Color"-->
+<!--        app:layout_constraintTop_toTopOf="@id/requestHeight"-->
+<!--        tools:layout_editor_absoluteX="356dp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/heightResponse"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="26dp"-->
+<!--        android:text="no height"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/requestHeight"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/requestHeight" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/colorResponse"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginVertical="30dp"-->
+<!--        android:text="no color"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/requestColor"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/requestColor" />-->
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/requestLedRed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="149dp"
-        android:layout_marginRight="149dp"
-        android:text="Button"
-        android:onClick="requestColor"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="requestLed"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
+        android:text="wing 1"
+        app:layout_constraintStart_toStartOf="@+id/requestLedGreen"
+        app:layout_constraintTop_toBottomOf="@+id/requestLedGreen" />
+    <Button
+        android:id="@+id/requestLedGreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
+        android:layout_marginTop="8dp"
+        android:onClick="requestLed"
+        android:text="wing 2"
+        app:layout_constraintStart_toStartOf="@+id/requestLedBlue"
+        app:layout_constraintTop_toBottomOf="@+id/requestLedBlue" />
+
+    <Button
+        android:id="@+id/requestLedBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="requestLed"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
+        android:text="wing 3"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/heightResponse"
+    <Button
+        android:id="@+id/requestLedWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="26dp"
-        android:text="no height"
-        app:layout_constraintStart_toStartOf="@+id/requestHeight"
-        app:layout_constraintTop_toBottomOf="@+id/requestHeight" />
+        android:onClick="requestLed"
+        android:text="wing 4"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
+        app:layout_constraintStart_toStartOf="@+id/requestLedRed"
+        app:layout_constraintTop_toBottomOf="@+id/requestLedRed" />
 
     <TextView
-        android:id="@+id/colorResponse"
+        android:id="@+id/ledResponse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="31dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="no led"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
+        app:layout_constraintStart_toStartOf="@+id/requestLedWhite"
+        app:layout_constraintTop_toBottomOf="@+id/requestLedWhite" />
+
+    <Button
+        android:id="@+id/requestTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="requestTemperature"
+        android:text="Request Temp"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
+        app:layout_constraintStart_toStartOf="@+id/requestLedRed"
+        app:layout_constraintTop_toBottomOf="@+id/ledResponse" />
+
+    <TextView
+        android:id="@+id/tempResponse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="no temp"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
+        app:layout_constraintStart_toStartOf="@+id/requestTemp"
+        app:layout_constraintTop_toBottomOf="@+id/requestTemp" />
+
+
+
+
+</LinearLayout>

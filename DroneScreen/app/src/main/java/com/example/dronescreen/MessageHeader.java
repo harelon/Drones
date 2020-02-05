@@ -19,7 +19,9 @@ class MessageHeader {
         REQUEST_ANGULAR_ORIENTATION (13),
         RESPONSE_ANGULAR_ORIENTATION (14),
         REQUEST_SERVO_DROP (15),
-        RESPONSE_SERVO_DROP(16);
+        RESPONSE_SERVO_DROP(16),
+        REQUEST_LED_ON(17),
+        RESPONSE_LED_ON(18);
 
         private final byte _typeNumber;
         Type(int typeNumber) {
@@ -30,19 +32,20 @@ class MessageHeader {
             return _typeNumber;
         }
     }
-    private Byte _length;
-    private Type _type;
+    protected Byte _length;
+    protected Type _type;
 
-    public MessageHeader()
-    {
-        _length = null;
-        _type = null;
-    }
 
     public MessageHeader(int length, Type type)
     {
         _length = (byte)length;
         _type = type;
+    }
+
+    public MessageHeader(byte [] buffer)
+    {
+        _length = buffer[0];
+        _type = Type.values()[buffer[1]];
     }
 
     public void setLength(int length)
@@ -64,10 +67,5 @@ class MessageHeader {
     public byte[] serialize()
     {
         return new byte[]{_length,_type.toByte()};
-    }
-    public  void load(byte[] buffer)
-    {
-        _length = buffer[0];
-        _type = Type.values()[buffer[1]];
     }
 }

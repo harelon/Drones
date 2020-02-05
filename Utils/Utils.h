@@ -2,7 +2,7 @@
 #define UTILS_LIB_H
 
 #include <Arduino.h>
-
+#pragma pack(push, 1)
 typedef enum {
   MAIN_NONE =   0x000000,
   MAIN_RED =    0xFF0000,
@@ -26,9 +26,9 @@ typedef enum{
 } BallStates;
 
 typedef struct {
-  uint16_t r;
-  uint16_t g;
-  uint16_t b;
+  byte r;
+  byte g;
+  byte b;
 } rgbColor;
 
 typedef struct{
@@ -44,5 +44,5 @@ class Utils
     private:
         Utils(){};
 };
-
+#pragma pack(pop)
 #endif

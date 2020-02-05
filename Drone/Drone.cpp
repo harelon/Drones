@@ -192,8 +192,34 @@ Drone* Drone::SetUpLeds(byte pin)
     return this;
 }
 
+void Drone::SendSetLeds(LedRequest* message)
+{
+    Serial.println("recived set leds");
+    LedResponse response;
+
+    response.header.length = sizeof(LedResponse);
+    response.header.type = RESPONSE_LED_ON;
+    
+    
+    SetLeds(message->color,message->wing);
+
+    SendMessage(&response.header);
+}
+
+void Drone::SetLeds(rgbColor color, byte wing)
+{
+    Serial.print("r = ");
+    Serial.println(color.r);
+        Serial.print("g = ");
+    Serial.println(color.g);
+        Serial.print("b = ");
+    Serial.println(color.b);
+    _cl.SetRing(color.r, color.g, color.b,wing);
+}
+
 void Drone::DispatchMessage(MessageHeader* message)
 {
+    Serial.println(message->type);
     switch (message->type)
     {
         case REQUEST_FOR_TEMPERATURE:
@@ -219,6 +245,9 @@ void Drone::DispatchMessage(MessageHeader* message)
             break;
         case REQUEST_SERVO_DROP:
             OnBallDropRequest((ServoRequest*) message);
+            break;
+        case REQUEST_LED_ON:
+            OnLedRequest((LedRequest*) message);
             break;
     }
 }
@@ -274,4 +303,9 @@ void Drone::OnRawColorRequest()
 void Drone::OnBallDropRequest(ServoRequest* message)
 {
     SendBallDrop(message);
+}
+
+void Drone::OnLedRequest(LedRequest* message)
+{
+    SendSetLeds(message);
 }

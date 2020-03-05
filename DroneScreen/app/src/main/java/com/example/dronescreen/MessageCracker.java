@@ -18,6 +18,11 @@ public class MessageCracker {
 //                _messageHandler.onMessage(msg);
                 break;
             }
+            case RESPONSE_ANGULAR_ORIENTATION:{
+                AngularOrientationResponse msg = new AngularOrientationResponse(buffer);
+                _messageHandler.onMessage(msg);
+                break;
+            }
             case RESPONSE_FOR_HEIGHT: {
                 HeightResponse msg = new HeightResponse(buffer);
 //                _messageHandler.onMessage(msg);
@@ -25,11 +30,16 @@ public class MessageCracker {
             }
             case RESPONSE_LED_ON: {
                 LedResponse msg = new LedResponse(buffer);
-                _messageHandler.onMessage(msg);
+//                _messageHandler.onMessage(msg);
                 break;
             }
             case RESPONSE_FOR_TEMPERATURE:{
                 TemperatureResponse msg = new TemperatureResponse(buffer);
+//                _messageHandler.onMessage(msg);
+                break;
+            }
+            case RESPONSE_RAW_COLOR:{
+                RawColorResponse msg = new RawColorResponse(buffer);
                 _messageHandler.onMessage(msg);
                 break;
             }

@@ -1,14 +1,16 @@
 #include <Drone.h>
 
-Drone* Drone::SetUpServo(byte pin, ServoColors color)
-{
-   return SetUpServo(pin, color, NEED_TO_LOAD);
-}
+// Drone* Drone::SetUpServo(byte pin, ServoColors color)
+// {
+//    return SetUpServo(pin, color, NEED_TO_LOAD);
+// }
 
-Drone* Drone::SetUpServo(byte pin, ServoColors color, BallStates state)
+Drone* Drone::SetUpServo(byte pin)
 {
-    balls[color].Init(pin, color, state);
-    balls[color].Lock();
+    // balls[color].Init(pin, color, state);
+    // balls[color].Lock();
+    ball.attach(pin);
+    ball.write(90);
     return this;
 }
 
@@ -18,16 +20,13 @@ void Drone::SendBallDrop(ServoRequest* message)
 
     response.header.length = sizeof(ServoResponse);
     response.header.type = RESPONSE_SERVO_DROP;
-    
-    
-    response.state = DropBall(message->servoColor);
 
     SendMessage(&response.header);
 }
 
-BallStates Drone::DropBall(ServoColors color)
+void Drone::DropBall()
 {
-    return balls[color].Drop();
+    ball.write(0);
 }
 
 Drone* Drone::SetUpTempSensor()
@@ -213,13 +212,17 @@ void Drone::SendSetLeds(LedRequest* message)
 }
 
 void Drone::SetLeds(rgbColor color, byte wing)
-// {
+{
 //     Serial.print("r = ");
 //     Serial.println(color.r);
 //         Serial.print("g = ");
 //     Serial.println(color.g);
 //         Serial.print("b = ");
 //     Serial.println(color.b);
+	if(wing == 0)
+	{
+		_cl.SetAll(color.r, color.g, color.b);
+	}
     _cl.SetRing(color.r, color.g, color.b,wing);
 }
 

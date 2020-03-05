@@ -7,9 +7,9 @@
 #include <CustomGyro.h>
 #include <Comms.h>
 #include <CustomLedV2.h>
-#include <ServoBall.h>
-
-#define ServoNumbers 3
+// #include <ServoBall.h>
+#include <Servo.h>
+// #define ServoNumbers 3
 class Drone: public Comms
 {
     private:
@@ -25,7 +25,7 @@ class Drone: public Comms
         uint16_t blue_light = 0;
         int _buzzerId;
         uint16_t _height = 0;
-        ServoBall balls[ServoNumbers];
+        Servo ball;
 
     protected:
         void virtual SendConnectMsg();
@@ -49,7 +49,7 @@ class Drone: public Comms
         void SendAngularOrientation();
         void SendBallDrop(ServoRequest* message);
         void SendSetLeds(LedRequest* message);
-        BallStates DropBall(ServoColors color);
+        void DropBall();
         void SetLeds(rgbColor color, byte wing);
 
         void ReadColor();
@@ -67,8 +67,9 @@ class Drone: public Comms
         Drone* SetUpHeightSensor(byte echo);
         Drone* SetUpBuzzer(byte buzzerId);
         Drone* SetUpGyro();
-        Drone* SetUpServo(byte pin, ServoColors color);
-        Drone* SetUpServo(byte pin, ServoColors color, BallStates state);
+        // Drone* SetUpServo(byte pin, ServoColors color);
+        // Drone* SetUpServo(byte pin, ServoColors color, BallStates state);
+        Drone* SetUpServo(byte pin);
         Drone* SetUpLeds(byte pin);
         CustomGyro _Gyro;
 };

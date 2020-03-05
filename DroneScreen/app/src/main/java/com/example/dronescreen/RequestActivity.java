@@ -1,13 +1,20 @@
 package com.example.dronescreen;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RequestActivity extends AppCompatActivity implements MessageHandler{
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class RequestActivity extends AppCompatActivity implements MessageHandler {
+
+    String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +23,67 @@ public class RequestActivity extends AppCompatActivity implements MessageHandler
         Services.setMessageCracker(new MessageCracker(this));
     }
 
-    public void requestColor(View view) {
-        Services.getReadWriteThread().sendMessage(new RawColorRequest());
-        Log.d("thread","color request sent");
+    public void addNumToCode(View view) {
+        password += ((Button) view).getText().toString();
+        checkPassword();
     }
-    public void requestSpins(View view)
-    {
-        Services.getReadWriteThread().sendMessage(new AngularOrientationRequest());
+
+    public void checkPassword() {
+        if (password.length() != 4) {
+            return;
+        }
+        if ("1224".equals(password)) {
+            Services.getReadWriteThread().sendMessage(new BallDropRequest());
+        } else {
+            password = "";
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
+                }
+            });
+            thread.start();
+        }
+
     }
+//    public void requestColor(View view) {
+//        Services.getReadWriteThread().sendMessage(new RawColorRequest());
+//        Log.d("thread","color request sent");
+//    }
+//    public void requestSpins(View view)
+//    {
+//        Services.getReadWriteThread().sendMessage(new AngularOrientationRequest());
+//    }
 //
 //    public void requestHeight(View view) {
 //        Services.getReadWriteThread().sendMessage(new HeightRequest());
@@ -61,27 +121,38 @@ public class RequestActivity extends AppCompatActivity implements MessageHandler
 //    }
 
 
-    @Override
-    public void onMessage(final AngularOrientationResponse msg) {
-        Log.d("thread","color response received");
-        findViewById(R.id.spinsResponse).post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("thread","thread was run");
-                ((TextView)findViewById(R.id.spinsResponse)).setText(Integer.toString(((int)msg.getYaw())/360));
-            }
-        });
-    }
+//    @Override
+//    public void onMessage(final AngularOrientationResponse msg) {
+//        Log.d("thread", "color response received");
+//        findViewById(R.id.spinsResponse).post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.d("thread", "thread was run");
+//                ((TextView) findViewById(R.id.spinsResponse)).setText(Integer.toString(((int) msg.getYaw()) / 360));
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void onMessage(final RawColorResponse msg) {
+//        findViewById(R.id.colorResponse).post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.d("thread", "thread was run");
+//                ((TextView) findViewById(R.id.colorResponse)).setText(Integer.toString(msg.getRed()));
+//            }
+//        });
+//    }
 
     @Override
-    public void onMessage(final RawColorResponse msg) {
-        findViewById(R.id.colorResponse).post(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("thread","thread was run");
-                    ((TextView)findViewById(R.id.colorResponse)).setText(Integer.toString(msg.getRed()));
-                }
-            });
+    public void onMessage(BallDropResponse msg) {
+        findViewById(R.id.textView).post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("thread", "thread was run");
+                ((TextView) findViewById(R.id.textView)).setText("Servo responded");
+            }
+        });
     }
 
 

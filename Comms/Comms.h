@@ -90,7 +90,6 @@ typedef struct{
 
 typedef struct{
    MessageHeader header;
-   byte servoColor;
 }ServoRequest;
 
 typedef struct{
@@ -133,7 +132,6 @@ typedef struct{
 
 typedef struct{
    MessageHeader header;
-   byte state;
 }ServoResponse;
 
 typedef struct{

@@ -3,13 +3,13 @@ Drone drone(5, 4);
 Drone* droneRef = &drone;
 void setup() {
 //  Serial.begin(9600);
-  droneRef->SetUpGyro()->SetUpColorSensor();
+  droneRef->SetUpLeds(A0)->SetUpServo(9);//->SetUpGyro()->SetUpColorSensor();
 //  ->SetUpLeds(A0)->SetUpTempSensor();///*->SetUpHeightSensor(11)*/;
   //  droneRef->SetUpColorSensor()->SetUpHeightSensor(8)->SetUpLeds(7);
   //  droneRef->SetUpServo(9, SERVO_RED)->SetUpServo(10, SERVO_GREEN)->SetUpServo(11, SERVO_BLUE);
 }
 void loop() {
-  drone._Gyro.startTime();
+//  drone._Gyro.startTime();
   drone.PollMessage();
-  drone._Gyro.updateValues();
+//  drone._Gyro.updateValues();
 }

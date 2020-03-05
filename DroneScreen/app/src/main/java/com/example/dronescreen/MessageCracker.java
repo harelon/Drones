@@ -20,7 +20,7 @@ public class MessageCracker {
             }
             case RESPONSE_ANGULAR_ORIENTATION:{
                 AngularOrientationResponse msg = new AngularOrientationResponse(buffer);
-                _messageHandler.onMessage(msg);
+//                _messageHandler.onMessage(msg);
                 break;
             }
             case RESPONSE_FOR_HEIGHT: {
@@ -40,6 +40,11 @@ public class MessageCracker {
             }
             case RESPONSE_RAW_COLOR:{
                 RawColorResponse msg = new RawColorResponse(buffer);
+//                _messageHandler.onMessage(msg);
+                break;
+            }
+            case RESPONSE_SERVO_DROP:{
+                BallDropResponse msg = new BallDropResponse(buffer);
                 _messageHandler.onMessage(msg);
                 break;
             }

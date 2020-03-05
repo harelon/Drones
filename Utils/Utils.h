@@ -32,9 +32,9 @@ typedef struct {
 } rgbColor;
 
 typedef struct{
-   int16_t pitch;
-   int16_t roll;
-   int16_t yaw;
+   float pitch;
+   float roll;
+   float yaw;
 } AngularOrientation;
 
 class Utils

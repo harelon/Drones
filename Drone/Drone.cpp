@@ -162,9 +162,15 @@ void Drone::SendAngularOrientation()
     GyroResponse response;
     response.header.length = sizeof(GyroResponse);
     response.header.type = RESPONSE_ANGULAR_ORIENTATION;
-    response.angularOrientation.pitch = (int16_t)_Gyro.GetPitch();
-    response.angularOrientation.roll = (int16_t)_Gyro.GetRoll();
-    response.angularOrientation.yaw = (int16_t)_Gyro.GetYaw();
+    response.angularOrientation.pitch = _Gyro.GetPitch();
+    response.angularOrientation.roll = _Gyro.GetRoll();
+    response.angularOrientation.yaw = _Gyro.GetYaw();
+	// Serial.print("pitch = ");
+	// Serial.println(response.angularOrientation.pitch);
+	// Serial.print("roll = ");
+	// Serial.println(response.angularOrientation.roll);
+	// Serial.print("yaw = ");
+	// Serial.println(response.angularOrientation.yaw);
     SendMessage(&response.header);
 }
 
@@ -194,7 +200,7 @@ Drone* Drone::SetUpLeds(byte pin)
 
 void Drone::SendSetLeds(LedRequest* message)
 {
-    Serial.println("recived set leds");
+    // Serial.println("recived set leds");
     LedResponse response;
 
     response.header.length = sizeof(LedResponse);
@@ -207,19 +213,19 @@ void Drone::SendSetLeds(LedRequest* message)
 }
 
 void Drone::SetLeds(rgbColor color, byte wing)
-{
-    Serial.print("r = ");
-    Serial.println(color.r);
-        Serial.print("g = ");
-    Serial.println(color.g);
-        Serial.print("b = ");
-    Serial.println(color.b);
+// {
+//     Serial.print("r = ");
+//     Serial.println(color.r);
+//         Serial.print("g = ");
+//     Serial.println(color.g);
+//         Serial.print("b = ");
+//     Serial.println(color.b);
     _cl.SetRing(color.r, color.g, color.b,wing);
 }
 
 void Drone::DispatchMessage(MessageHeader* message)
 {
-    Serial.println(message->type);
+    // Serial.println(message->type);
     switch (message->type)
     {
         case REQUEST_FOR_TEMPERATURE:

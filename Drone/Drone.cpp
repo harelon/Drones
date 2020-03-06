@@ -20,7 +20,8 @@ void Drone::SendBallDrop(ServoRequest* message)
 
     response.header.length = sizeof(ServoResponse);
     response.header.type = RESPONSE_SERVO_DROP;
-
+    Serial.println("dropping ball");
+    DropBall();
     SendMessage(&response.header);
 }
 
@@ -199,7 +200,7 @@ Drone* Drone::SetUpLeds(byte pin)
 
 void Drone::SendSetLeds(LedRequest* message)
 {
-    // Serial.println("recived set leds");
+    Serial.println("recived set leds");
     LedResponse response;
 
     response.header.length = sizeof(LedResponse);
@@ -228,7 +229,7 @@ void Drone::SetLeds(rgbColor color, byte wing)
 
 void Drone::DispatchMessage(MessageHeader* message)
 {
-    // Serial.println(message->type);
+    Serial.println(message->type);
     switch (message->type)
     {
         case REQUEST_FOR_TEMPERATURE:

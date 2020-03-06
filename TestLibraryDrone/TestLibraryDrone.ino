@@ -1,9 +1,9 @@
 #include "Drone.h"
-Drone drone(5, 4);
+Drone drone(6, 7);
 Drone* droneRef = &drone;
 void setup() {
-//  Serial.begin(9600);
-  droneRef->SetUpLeds(A0)->SetUpServo(9);//->SetUpGyro()->SetUpColorSensor();
+  Serial.begin(9600);
+  droneRef->SetUpLeds(A0)->SetUpServo(11);//->SetUpGyro()->SetUpColorSensor();
 //  ->SetUpLeds(A0)->SetUpTempSensor();///*->SetUpHeightSensor(11)*/;
   //  droneRef->SetUpColorSensor()->SetUpHeightSensor(8)->SetUpLeds(7);
   //  droneRef->SetUpServo(9, SERVO_RED)->SetUpServo(10, SERVO_GREEN)->SetUpServo(11, SERVO_BLUE);

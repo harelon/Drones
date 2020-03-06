@@ -1,16 +1,12 @@
 package com.example.dronescreen;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RequestActivity extends AppCompatActivity implements MessageHandler {
 
@@ -25,56 +21,59 @@ public class RequestActivity extends AppCompatActivity implements MessageHandler
 
     public void addNumToCode(View view) {
         password += ((Button) view).getText().toString();
+        Log.d("pass", password);
         checkPassword();
     }
 
     public void checkPassword() {
-        if (password.length() != 4) {
-            return;
-        }
-        if ("1224".equals(password)) {
-            Services.getReadWriteThread().sendMessage(new BallDropRequest());
-        } else {
-            password = "";
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
-                }
-            });
-            thread.start();
-        }
+        Log.d("pass", Integer.toString(password.length()));
+        if (password.length() == 4) {
+            if ("1224".equals(password)) {
+                Log.d("pass", "sending message");
+                Services.getReadWriteThread().sendMessage(new BallDropRequest());
+            } else {
 
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Services.getReadWriteThread().sendMessage(new LedRequest(0xFFFF33, 0));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Services.getReadWriteThread().sendMessage(new LedRequest(0, 0));
+                    }
+                });
+                thread.start();
+            }
+            password = "";
+
+        }
     }
 //    public void requestColor(View view) {
 //        Services.getReadWriteThread().sendMessage(new RawColorRequest());
